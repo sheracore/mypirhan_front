@@ -5,4 +5,4 @@
 ## Database offers
 ### Offer 1
 ![DataBase](/static_root_tmp/sherashirt_databases.png)
-![DataBase2](/static_root_tmp/databases2.png)
+![DataBase2](/static_root_tmp/database2.png)
