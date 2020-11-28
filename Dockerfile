@@ -1,0 +1,4 @@
+FROM python:3.7-alpine
+MAINTAINER sheracore App
+
+ENV PYTHONUNBUFFERED 1
