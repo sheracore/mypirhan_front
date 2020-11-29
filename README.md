@@ -13,5 +13,5 @@
 ![DataBase4](/media_root_tmp/database4.png)
 
 
-## Value chain 
+## Supply Chain Management 
 ![Value chain](/media_root_tmp/value_chain.png)
