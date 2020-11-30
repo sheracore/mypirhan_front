@@ -15,3 +15,18 @@
 
 ## Supply Chain Management 
 ![Value chain](/media_root_tmp/value_chain.png)
+
+
+
+## How Created project
+### This project dockerized and is has Dockerfile and docker-compose(for manage alpine and DB).
+### So for run than you should run
+```
+sudo docker build .
+sudo docker-compose build
+```
+### Now first how we created project by django:
+```
+sudo docker-compose run app sh -c "django-admin.py startproject app .
+```
+#### In above command the "." in the end of command is important baecuse if you dont use "." the project "app" created in your docker image not your corrent path.
