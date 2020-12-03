@@ -18,7 +18,7 @@
 
 
 
-## How Created project
+## How project Created
 ### This project dockerized and is has Dockerfile and docker-compose(for manage alpine and DB).
 ### So for run than you should run
 ```
@@ -30,3 +30,13 @@ sudo docker-compose build
 sudo docker-compose run app sh -c "django-admin.py startproject app .
 ```
 #### In above command the "." in the end of command is important baecuse if you dont use "." the project "app" created in your docker image not your corrent path.
+
+### By this command in you can test all tests that thay created by TDD methon
+```
+sudo docker run app sh -c "python manage.py test"
+```
+### Now for creating databases must run this
+```
+docker-compose run app sh -c "python manage.py makemigrations core"
+```
+#### notice that last core is not neccessory always.
