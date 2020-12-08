@@ -27,13 +27,17 @@ sudo docker-compose build
 ```
 ### Now first how we created project by django:
 ```
-sudo docker-compose run app sh -c "django-admin.py startproject app .
+docker-compose run app sh -c "django-admin.py startproject app ."
+```
+### To create app inside of project use this:
+```
+docker-compose run app sh -c "python manage.py startapp core"
 ```
 #### In above command the "." in the end of command is important baecuse if you dont use "." the project "app" created in your docker image not your corrent path.
 
 ### By this command in you can test all tests that thay created by TDD methon
 ```
-sudo docker run app sh -c "python manage.py test"
+docker run app sh -c "python manage.py test"
 ```
 ### Now for creating databases must run this
 ```
