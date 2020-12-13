@@ -44,4 +44,4 @@ docker run app sh -c "python manage.py test"
 ```
 docker-compose run app sh -c "python manage.py makemigrations core"
 ```
-#### notice that last core is not neccessory always.
+#### Notice that last core is not neccessory always.
