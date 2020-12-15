@@ -18,13 +18,13 @@ class AdminTest(TestCase):
 			name='sheracore'
 			)
 
-	# def test_user_listed(self):
-	# 	"""test that users are listed on user page"""
-	# 	url = reverse('admin:core_user_changelist')
-	# 	res = self.client.get(url)
-	# 	"""assertContains is a django custom assertion
-	# 	that will check our response of cantain a certain item
-	# 	response of http response with 200 """
-	# 	self.assertContains(res, self.user.name)
-	# 	self.assertContains(res, self.user.email)
+	def test_user_listed(self):
+		"""test that users are listed on user page"""
+		url = reverse('admin:core_user_changelist')
+		res = self.client.get(url)
+		"""assertContains is a django custom assertion
+		that will check our response of cantain a certain item
+		response of http response with 200 """
+		self.assertContains(res, self.user.name)
+		self.assertContains(res, self.user.email)
 
