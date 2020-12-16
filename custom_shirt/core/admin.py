@@ -1,9 +1,9 @@
 from django.contrib import admin
-
-from django.contrib.auth.admin import UserAdmin
 from core import models
+
+# from django.contrib.auth.admin import UserAdmin
 # from django.contrib.auth import get_user_model
-from django.utils.translation import gettext as _
+# from django.utils.translation import gettext as _
 
 
 
