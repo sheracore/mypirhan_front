@@ -40,8 +40,9 @@ docker-compose run app sh -c "python manage.py startapp core"
 ```
 docker run app sh -c "python manage.py test"
 ```
-### Now for creating databases must run this
+### Now to creating databases wh must run this
 ```
 docker-compose run app sh -c "python manage.py makemigrations core"
 ```
 #### Notice that last core is not neccessory always.
+
