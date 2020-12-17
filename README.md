@@ -1,6 +1,6 @@
 # sherashirt
 ## Create your lovely shirt
-### Created by django, docker, and ReactJS
+### Created by django by docker and docker-compose
 
 ## Database offers
 ### Database offer 1
