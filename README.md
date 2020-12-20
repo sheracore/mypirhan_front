@@ -45,7 +45,11 @@ docker run app sh -c "python manage.py test"
 docker-compose run app sh -c "python manage.py makemigrations core"
 ```
 #### Notice that last core is not neccessory always.
-
+### After change database like move from mysql to postgres you must run these:
+```
+python manage.py makemigrations
+python manage.py migrate
+```
 ### After install madouls then for run our app successfully run this:
 ```
 python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
