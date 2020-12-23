@@ -1,12 +1,16 @@
-from rest_framework import permissions
-from rest_framework import generics
-from django.contrib.auth import get_user_model # if used custom user model
+from rest_framework import permissions, generics
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 
-from .serializers import UserSerializer
+from user.serializers import UserSerializer, AuthTokenSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
 	"""Create a new user in the system"""
-	# model = get_user_model()
-	# permission_class = [permissions.AllowAny]
 	serializer_class = UserSerializer
+
+
+class CreateTokenView(ObtainAuthToken):
+	"""Create a new auth token for user"""
+	serializer_class = AuthTokenSerializer
+	renderred_classes = api_settings.DEFAULT_RENDERER_CLASSES
