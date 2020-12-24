@@ -1,5 +1,5 @@
 # sherashirt
-## end points
+## Endpoints
 ```
 /admin/
 /user/api/create/ ----> create user
