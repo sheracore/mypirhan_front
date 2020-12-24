@@ -2,8 +2,8 @@
 ## Endpoints
 ```
 /admin/
-/user/api/create/ ----> create user
-/user/api/token/ -----> create token for user
+/user/api/create/ ----> create user, methods = ['GET','POST']
+/user/api/token/ -----> create token for user, methods = ['POST']
 ```
 ## Create your lovely shirt
 ### Created by django by docker and docker-compose
