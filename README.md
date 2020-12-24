@@ -1,4 +1,9 @@
 # sherashirt
+## end points
+/admin/
+/user/api/create/ ----> create user
+/user/api/token/ -----> create token for user
+
 ## Create your lovely shirt
 ### Created by django by docker and docker-compose
 
