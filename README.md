@@ -58,7 +58,7 @@ docker-compose run app sh -c "python manage.py makemigrations core"
 python manage.py makemigrations
 python manage.py migrate
 ```
-### After install madouls then for run our app successfully run this:
+### After installing madouls then for runing our app successfully run this:
 ```
 python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
 ```
