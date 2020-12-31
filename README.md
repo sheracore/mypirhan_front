@@ -62,3 +62,4 @@ python manage.py migrate
 ```
 python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
 ```
+### Sometimes you should delete tables and run migrations again to sync db and django ORM inside of developing backend
