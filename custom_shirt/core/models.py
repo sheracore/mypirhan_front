@@ -1,6 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager 
+
+from django.conf import settings # recommnded to retrieve setting from the django settings(custom_shit.setting)
 
  
 class UserManager(BaseUserManager):
@@ -28,12 +29,19 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
 	"""Custom user model that suppors using email instead of username"""
-	email = models.EmailField(max_length=255, unique=True)
-	name = models.CharField(max_length=255)
+	email = models.EmailField(max_length=64, unique=True)
+	name = models.CharField(max_length=64, null=True)
+	address1 = models.CharField(max_length=255, null=True)
+	address2 = models.CharField(max_length=255, null=True)
+	city = models.CharField(max_length=64, default='Tehran', null=True)
+	province = models.CharField(max_length=64, default='Tehran', null=True)
+	postal_code = models.CharField(max_length=32, null=True)
+	phone = models.CharField(max_length=12, null=True)
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
 
+	
 	USERNAME_FIELD = 'email'
 
 	objects = UserManager()
@@ -44,3 +52,20 @@ class User(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return self.is_superuser
 
+
+class Supplier(models.Model):
+	"""Supplier to be used for products"""
+	"""Instead of reffrence user object directly that we could do
+	   we ganna use best practice method to retrieving auth user model
+	   setting from django settings"""
+	company_name = models.CharField(max_length=64)
+	type_good = models.CharField(max_length=64)
+	discount_percent = models.IntegerField(null=True)
+	url = models.URLField(max_length=100, null=True)
+	user = models.ForeignKey(
+		settings.AUTH_USER_MODEL,
+		on_delete=models.CASCADE,
+		)
+
+	def __str__(self):
+		return self.company_name

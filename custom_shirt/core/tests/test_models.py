@@ -1,6 +1,15 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
+from core.models import Supplier
+
+
+def sample_user(email='test@sheracore.com', password='testpass'):
+    """Create a sample user"""
+    return get_user_model().objects.create_user(email,password)
+
+
+
 class ModelTest(TestCase):
 
     def test_create_user_with_email_successfull(self):
@@ -36,6 +45,23 @@ class ModelTest(TestCase):
     	
     	self.assertTrue(user.is_staff)
     	self.assertTrue(user.is_superuser)
+
+    def test_supplier_str(self):
+        """Test the supplier srting representation"""
+        supplier = Supplier.objects.create(
+            user = sample_user(),
+            company_name = 'Pirahansara',
+            url = 'www.pirahansara.com',
+            type_good = 'Tshirt',
+            discount_percent = 12,
+            )
+        self.assertEqual(str(supplier), supplier.company_name)
+
+    # def test_supplier_str(self):
+    #     """Test the tag string representation"""
+    #     product = product.objects.create(
+    #         supplier = 
+    #         )
 
 
 
