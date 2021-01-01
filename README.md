@@ -7,6 +7,14 @@ Notice that put function is for entire object but by patch you can only update v
 /user/api/token/ -----> create token for user, methods = [POST]
 /user/api/me/ -----> methods = [ GET, PUT, PATCH, HEAD, OPTIONS] manageuser endpoint to authenticate the user, update own profile(Changing the name, password and view in the user objects)
 ```
+#### Just for admin test we used force_login
+
+* You can map CRUD methods in your terminla for example:
+```
+self.user = create_user(email='private@sheracore.com',password='testpass',name='name')
+http post http://127.0.0.1:8000/api-token-auth/ username=vitor password=123
+```
+
 ## Create your lovely shirt
 ### Created by django by docker and docker-compose
 
@@ -61,4 +69,12 @@ python manage.py migrate
 ### After installing madouls then for runing our app successfully run this:
 ```
 python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
+```
+### Sometimes you should delete tables and run migrations again to sync db and django ORM inside of developing backend
+
+### Docs
+[Model relationships](https://docs.djangoproject.com/en/3.1/topics/db/examples/)
+
+```diff
++ Using foreignkey field in models means Many-To-One relationship
 ```
