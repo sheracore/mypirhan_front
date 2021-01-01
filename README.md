@@ -7,7 +7,7 @@ Notice that put function is for entire object but by patch you can only update v
 /user/api/token/ -----> create token for user, methods = [POST]
 /user/api/me/ -----> methods = [ GET, PUT, PATCH, HEAD, OPTIONS] manageuser endpoint to authenticate the user, update own profile(Changing the name, password and view in the user objects)
 ```
-### Just for admin test we used force_login
+#### Just for admin test we used force_login
 
 ## Create your lovely shirt
 ### Created by django by docker and docker-compose
