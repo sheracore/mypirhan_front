@@ -9,6 +9,12 @@ Notice that put function is for entire object but by patch you can only update v
 ```
 #### Just for admin test we used force_login
 
+* You can map CRUD methods in your terminla for example:
+```
+self.user = create_user(email='private@sheracore.com',password='testpass',name='name')
+http post http://127.0.0.1:8000/api-token-auth/ username=vitor password=123
+```
+
 ## Create your lovely shirt
 ### Created by django by docker and docker-compose
 
