@@ -66,3 +66,7 @@ python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
 
 ### Docs
 [Model relationships](https://docs.djangoproject.com/en/3.1/topics/db/examples/)
+
+```diff
++ Using foreignkey field in models means Many-To-One relationship
+```
