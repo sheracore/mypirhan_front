@@ -73,3 +73,28 @@ class PrivateSupplierApiTests(TestCase):
 		self.assertEqual(res.status_code, status.HTTP_200_OK)
 		self.assertEqual(len(res.data), 1)
 		self.assertEqual(res.data[0]['company_name'], supplier.company_name)
+
+	def test_create_supplier_successful(self):
+		"""Test creating a new tag"""
+		payload = {
+					'company_name' : 'pirhansara',
+					'type_good' : 'tshirt',
+					'discount_percent' : 15,
+					'url' : 'http://www.pirhan.com'
+					}
+		self.client.post(SUPPLIER_URL, payload)
+
+		supplier_exist = Supplier.objects.filter(
+			user=self.user,
+			company_name=payload['company_name']
+			).exists()
+
+		self.assertTrue(supplier_exist)
+
+	def test_create_supplier_invalid(self):
+		"""Test creating a new supplier with invalid payload"""
+		payload = {'namd' : ''}
+		res = self.client.post(SUPPLIER_URL, payload)
+
+		self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+

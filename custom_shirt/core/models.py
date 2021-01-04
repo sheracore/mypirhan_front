@@ -61,7 +61,7 @@ class Supplier(models.Model):
 	company_name = models.CharField(max_length=64)
 	type_good = models.CharField(max_length=64)
 	discount_percent = models.IntegerField(null=True)
-	url = models.URLField(max_length=100, null=True)
+	url = models.URLField(max_length=100, null=True, unique=True)
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE,
