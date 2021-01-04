@@ -13,7 +13,7 @@ Notice that put function is for entire object but by patch you can only update v
 * You can map CRUD methods in your terminla for example:
 ```
 self.user = create_user(email='private@sheracore.com',password='testpass',name='name')
-http post http://127.0.0.1:8000/api/user/token/ username=private@sheracore.com password=testpass
+http post http://127.0.0.1:8000/api/user/token/ email=private@sheracore.com password=testpass
 ```
 
 ## Create your lovely shirt
