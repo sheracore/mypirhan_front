@@ -3,6 +3,15 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 from django.conf import settings # recommnded to retrieve setting from the django settings(custom_shit.setting)
 
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/recipe/', filename)
+
+
  
 class UserManager(BaseUserManager):
 	
@@ -60,7 +69,7 @@ class Supplier(models.Model):
 	   setting from django settings"""
 	company_name = models.CharField(max_length=64)
 	type_good = models.CharField(max_length=64)
-	discount_percent = models.IntegerField(null=True)
+	discount_type = models.CharField(max_length=64, null=True)
 	url = models.URLField(max_length=100, null=True, unique=True)
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
@@ -69,3 +78,33 @@ class Supplier(models.Model):
 
 	def __str__(self):
 		return self.company_name
+
+
+
+class Product(models.Model):
+	"""Supplier to be used for products"""
+	"""Instead of reffrence user object directly that we could do
+	   we ganna use best practice method to retrieving auth user model
+	   setting from django settings"""
+	supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+	product_brand = models.CharField(max_length=64)
+	product_name = models.CharField(max_length=64)
+	product_description = models.CharField(max_length=512, null=True)
+	product_available = models.BooleanField(default=True)
+	discount_available = models.BooleanField(default=True)
+	discount = models.FloatField(default=0.0)
+	available_size= models.BooleanField(default=True)
+	available_colors= models.BooleanField(default=True)
+	size = models.CharField(max_length=64)
+	color = models.CharField(max_length=64, default="No colore")
+	weight_kg = models.FloatField(null=True)
+	units_in_stock = models.IntegerField(null=True)
+	units_on_order_per_day = models.IntegerField(null=True)
+	picture = models.ImageField(null=True, upload_to=recipe_image_file_path)
+	rainking= models.FloatField(null=True)
+	note = models.CharField(max_length=512, null=True)
+
+
+
+	def __str__(self):
+		return self.product_name

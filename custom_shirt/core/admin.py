@@ -32,3 +32,4 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 admin.site.register(models.User, CustomUserAdmin)
 admin.site.register(models.Supplier)
+admin.site.register(models.Product)

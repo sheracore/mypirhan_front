@@ -79,7 +79,7 @@ class PrivateSupplierApiTests(TestCase):
 		payload = {
 					'company_name' : 'pirhansara',
 					'type_good' : 'tshirt',
-					'discount_percent' : 15,
+					'discount_type' : "percent",
 					'url' : 'http://www.pirhan.com'
 					}
 		self.client.post(SUPPLIER_URL, payload)
