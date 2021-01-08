@@ -69,8 +69,8 @@ class Supplier(models.Model):
 	   setting from django settings"""
 	company_name = models.CharField(max_length=64)
 	type_good = models.CharField(max_length=64)
-	discount_type = models.CharField(max_length=64, null=True)
-	url = models.URLField(max_length=100, null=True, unique=True)
+	discount_type = models.CharField(max_length=64, null=True, blank=True)
+	url = models.URLField(max_length=100, null=True, unique=True, blank=True)
 	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE,
@@ -89,20 +89,20 @@ class Product(models.Model):
 	supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
 	product_brand = models.CharField(max_length=64)
 	product_name = models.CharField(max_length=64)
-	product_description = models.CharField(max_length=512, null=True)
+	product_description = models.CharField(max_length=512, null=True, blank=True)
 	product_available = models.BooleanField(default=True)
 	discount_available = models.BooleanField(default=True)
 	discount = models.FloatField(default=0.0)
 	available_size= models.BooleanField(default=True)
 	available_colors= models.BooleanField(default=True)
 	size = models.CharField(max_length=64)
-	color = models.CharField(max_length=64, default="No colore")
-	weight_kg = models.FloatField(null=True)
-	units_in_stock = models.IntegerField(null=True)
-	units_on_order_per_day = models.IntegerField(null=True)
-	picture = models.ImageField(null=True, upload_to=recipe_image_file_path)
-	rainking= models.FloatField(null=True)
-	note = models.CharField(max_length=512, null=True)
+	color = models.CharField(max_length=64, default="No color")
+	weight_gram = models.FloatField(null=True, blank=True)
+	units_in_stock = models.IntegerField(null=True, blank=True)
+	units_on_order_per_day = models.IntegerField(null=True, blank=True)
+	picture = models.ImageField(null=True, blank=True, upload_to=recipe_image_file_path)
+	rainking= models.FloatField(null=True, blank=True)
+	note = models.CharField(max_length=512, null=True, blank=True)
 
 
 

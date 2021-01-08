@@ -81,8 +81,6 @@ class ModelTest(TestCase):
 				type_good = type_good,
 				discount_type = discount_type
 				)
-		print(supplier.user, supplier.company_name, supplier.url, supplier.type_good, supplier.discount_type)
-		print(type(supplier))
 		self.assertEqual(supplier.company_name, company_name)
 
 	def test_product_str(self):
@@ -99,7 +97,7 @@ class ModelTest(TestCase):
 	        available_colors= True,
 	        size='Xlarg',
 	        color='white',
-	        weight_kg=0.2,
+	        weight_gram=0.2,
 	        units_in_stock=200,
 	        units_on_order_per_day=20,
 	        rainking=4.5,

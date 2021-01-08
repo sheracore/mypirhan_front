@@ -2,9 +2,9 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Supplier
+from core.models import Supplier, Product
 
-from product.serializers import SupplierSerializer
+from product.serializers import SupplierSerializer, ProductSerializer
 
 
 
@@ -25,3 +25,18 @@ class SupplierViewSet(viewsets.GenericViewSet,
 		"""Create a new supplier"""
 		# Set the user to the authenticated user 
 		serializer.save(user=self.request.user)
+
+class ProductViewSet(viewsets.GenericViewSet,
+					mixins.ListModelMixin):
+	"""Manage Product in the database"""
+	# authentication_classes = (TokenAuthentication,)
+	# permission_classes = (IsAuthenticated,)
+	queryset = Product.objects.all()
+	serializer_class = ProductSerializer
+
+	
+
+
+
+
+
