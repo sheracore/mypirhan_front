@@ -43,20 +43,43 @@ class PrivateProductApiTest(TestCase):
 		"""Test retrieving a list of proructs"""		
 		Product.objects.create(
 			supplier=self.supplier,
-			product_name="15xordad",
+			product_name="short",
 			)
 		Product.objects.create(
 			supplier=self.supplier,
-			product_name="tavlidisara",
+			product_name="patol",
 			)
 		res = self.client.get(PRODUCTS_URL)
 
 		products = Product.objects.all()
 		serializer = ProductSerializer(products, many=True)
-		print(res.data,"***************",serializer.data)
 
 		self.assertEqual(res.status_code, status.HTTP_200_OK)
 		self.assertEqual(res.data, serializer.data)
+
+	def test_create_product_successfull(self):
+		"""Test create a new product"""
+		payload = {
+			"product_name" : "lbaskordi",
+			"product_brand" : "saqqez",
+			"product_description" : "the best",
+			"size" : "mediom",
+			}
+		self.client.post(PRODUCTS_URL, payload)
+
+		exists = Product.objects.filter(
+			product_name=payload['product_name']
+			).exists()
+		self.assertTrue(exists)
+
+	def test_create_product_invalid(self):
+		"""Test creating invalid product fails"""
+		payload = {"product_name" : ""}
+		res = self.client.post(PRODUCTS_URL, payload)
+
+		self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 
 	# def test_products_limited_to_supplier(self):
 	# 	"""Test that products for the """

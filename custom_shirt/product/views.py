@@ -27,7 +27,8 @@ class SupplierViewSet(viewsets.GenericViewSet,
 		serializer.save(user=self.request.user)
 
 class ProductViewSet(viewsets.GenericViewSet,
-					mixins.ListModelMixin):
+					mixins.ListModelMixin,
+					mixins.CreateModelMixin):
 	"""Manage Product in the database"""
 	# authentication_classes = (TokenAuthentication,)
 	# permission_classes = (IsAuthenticated,)
