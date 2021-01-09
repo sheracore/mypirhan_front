@@ -73,9 +73,15 @@ python manage.py wait_for_db && python manage.py runserver 0.0.0.0:8000
 ```
 ### Sometimes you should delete tables and run migrations again to sync db and django ORM inside of developing backend
 
-### Docs
+## Docs
 [Model relationships](https://docs.djangoproject.com/en/3.1/topics/db/examples/)
 
 ```diff
 + Using foreignkey field in models means Many-To-One relationship
 ```
+### To custom permission you should create custom permisison by BasePermission there are some docs about it for get autentication just for specifics methos(create, destroy) you can use this type of permission
+[custom-permission from django-rest](https://www.django-rest-framework.org/api-guide/permissions/#custom-permissions)
+[custom-permission from mediom](https://forum.djangoproject.com/t/drf-testing-and-custom-permissions/464/2)
+
+
+
