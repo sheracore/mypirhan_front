@@ -19,10 +19,9 @@ class PublicProductApiTest(TestCase):
 	def setUp(self):
 		self.client = APIClient()
 
-	def test_login_dont_required(self):
-		"""Test that login is required for retrieving productes"""
+	def test_retrieve_product_does_not_login_required(self):
+		"""Test that retrieving product does not need to login"""
 		res = self.client.get(PRODUCTS_URL)
-
 		self.assertEqual(res.status_code, status.HTTP_200_OK)
 
 
@@ -58,13 +57,16 @@ class PrivateProductApiTest(TestCase):
 		self.assertEqual(res.data, serializer.data)
 
 	def test_create_product_successfull(self):
-		"""Test create a new product"""
+		"""Test create a new product just by staff"""
 		payload = {
 			"product_name" : "lbaskordi",
 			"product_brand" : "saqqez",
 			"product_description" : "the best",
 			"size" : "mediom",
+			"supplier" : self.supplier.id,
 			}
+
+		self.user.is_staff = True
 		self.client.post(PRODUCTS_URL, payload)
 
 		exists = Product.objects.filter(
@@ -73,10 +75,11 @@ class PrivateProductApiTest(TestCase):
 		self.assertTrue(exists)
 
 	def test_create_product_invalid(self):
-		"""Test creating invalid product fails"""
+		"""Test creating invalid product fails just by staff"""
 		payload = {"product_name" : ""}
-		res = self.client.post(PRODUCTS_URL, payload)
+		self.user.is_staff = True
 
+		res = self.client.post(PRODUCTS_URL, payload)
 		self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
 

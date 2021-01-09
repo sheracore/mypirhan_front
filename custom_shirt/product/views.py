@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.models import Supplier, Product
 
 from product.serializers import SupplierSerializer, ProductSerializer
+from product.permissions import ProductPermission
 
 
 
@@ -17,6 +18,8 @@ class SupplierViewSet(viewsets.GenericViewSet,
 	queryset = Supplier.objects.all()
 	serializer_class = SupplierSerializer
 
+
+	
 	def get_queryset(self):
 		"""Return objects for the current authenticated user only"""
 		return self.queryset.filter(user=self.request.user).order_by('-company_name')
@@ -30,14 +33,6 @@ class ProductViewSet(viewsets.GenericViewSet,
 					mixins.ListModelMixin,
 					mixins.CreateModelMixin):
 	"""Manage Product in the database"""
-	# authentication_classes = (TokenAuthentication,)
-	# permission_classes = (IsAuthenticated,)
+	permission_classes = (ProductPermission,)
 	queryset = Product.objects.all()
 	serializer_class = ProductSerializer
-
-	
-
-
-
-
-
