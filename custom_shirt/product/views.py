@@ -33,6 +33,7 @@ class ProductViewSet(viewsets.GenericViewSet,
 					mixins.ListModelMixin,
 					mixins.CreateModelMixin):
 	"""Manage Product in the database"""
+	authentication_classes = (TokenAuthentication,)
 	permission_classes = (ProductPermission,)
 	queryset = Product.objects.all()
 	serializer_class = ProductSerializer
@@ -41,6 +42,7 @@ class ProductViewSet(viewsets.GenericViewSet,
 class CategoryViewSet(viewsets.GenericViewSet,
 						mixins.ListModelMixin,
 						mixins.CreateModelMixin):
+	authentication_classes = (TokenAuthentication,)
 	permission_classes = (CategoryPermission,)
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer
