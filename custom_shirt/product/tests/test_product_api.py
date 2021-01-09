@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from rest_framework.test import force_authenticate, APIClient
+from rest_framework.test import APIClient
 from rest_framework import status
 
-from core.models import Product, Supplier
+from core.models import Product, Supplier, Category
 
 from product.serializers import ProductSerializer
 
@@ -25,7 +25,6 @@ class PublicProductApiTest(TestCase):
 		self.assertEqual(res.status_code, status.HTTP_200_OK)
 
 
-
 class PrivateProductApiTest(TestCase):
 	"""Test the privete products can be retrieved by authorized user"""
 
@@ -37,15 +36,33 @@ class PrivateProductApiTest(TestCase):
 			)
 		self.client.force_authenticate(self.user)
 		self.supplier = Supplier.objects.create(user=self.user, company_name='Pirhansara 16 xordad', type_good="Tshirt")
+		self.category = Category.objects.create(category_type="Thirt")
+
+	def test_create_is_staff_required(self):
+		"""Test for create required login"""
+		payload = {
+			"product_name" : "lbaskordi",
+			"product_brand" : "saqqez",
+			"product_description" : "the best",
+			"size" : "mediom",
+			"supplier" : self.supplier.id,
+			"category" : self.category
+			}
+		res = self.client.post(PRODUCTS_URL, payload)
+		
+		self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
 
 	def test_retrieve_products_list(self):
 		"""Test retrieving a list of proructs"""		
 		Product.objects.create(
 			supplier=self.supplier,
+			category=self.category,
 			product_name="short",
 			)
 		Product.objects.create(
 			supplier=self.supplier,
+			category=self.category,
 			product_name="patol",
 			)
 		res = self.client.get(PRODUCTS_URL)
@@ -64,6 +81,7 @@ class PrivateProductApiTest(TestCase):
 			"product_description" : "the best",
 			"size" : "mediom",
 			"supplier" : self.supplier.id,
+			"category" : self.category.id
 			}
 
 		self.user.is_staff = True

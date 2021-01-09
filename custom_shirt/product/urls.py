@@ -8,6 +8,7 @@ router = DefaultRouter()
 
 router.register('suppliers', views.SupplierViewSet)
 router.register('products', views.ProductViewSet)
+router.register('categories', views.CategoryViewSet)
 
 app_name = 'product'
 

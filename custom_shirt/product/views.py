@@ -2,10 +2,10 @@ from rest_framework import viewsets, mixins
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from core.models import Supplier, Product
+from core.models import Supplier, Product, Category
 
-from product.serializers import SupplierSerializer, ProductSerializer
-from product.permissions import ProductPermission
+from product.serializers import SupplierSerializer, ProductSerializer, CategorySerializer
+from product.permissions import ProductPermission, CategoryPermission
 
 
 
@@ -36,3 +36,13 @@ class ProductViewSet(viewsets.GenericViewSet,
 	permission_classes = (ProductPermission,)
 	queryset = Product.objects.all()
 	serializer_class = ProductSerializer
+
+
+class CategoryViewSet(viewsets.GenericViewSet,
+						mixins.ListModelMixin,
+						mixins.CreateModelMixin):
+	permission_classes = (CategoryPermission,)
+	queryset = Category.objects.all()
+	serializer_class = CategorySerializer
+
+

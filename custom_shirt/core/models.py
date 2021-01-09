@@ -80,6 +80,12 @@ class Supplier(models.Model):
 		return self.company_name
 
 
+class Category(models.Model):
+	category_type = models.CharField(max_length=128, default='Tshirt')
+
+	def __str__(self):
+		return self.category_type
+
 
 class Product(models.Model):
 	"""Supplier to be used for products"""
@@ -87,6 +93,7 @@ class Product(models.Model):
 	   we ganna use best practice method to retrieving auth user model
 	   setting from django settings"""
 	supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	product_brand = models.CharField(max_length=64)
 	product_name = models.CharField(max_length=64)
 	product_description = models.CharField(max_length=512, null=True, blank=True)

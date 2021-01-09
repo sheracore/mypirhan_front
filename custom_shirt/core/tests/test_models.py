@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from core.models import Supplier, Product
+from core.models import Supplier, Product, Category
 
 
 def sample_user(email='test@sheracore.com', password='testpass'):
@@ -18,6 +18,11 @@ def sample_supplier():
 	discount_type = "percent"
 	)
 
+def sample_category():
+	"""Create a sample category"""
+	return Category.objects.create(
+		category_type = 'Tshirt',
+		)
 
 
 class ModelTest(TestCase):
@@ -84,26 +89,34 @@ class ModelTest(TestCase):
 		self.assertEqual(supplier.company_name, company_name)
 
 	def test_product_str(self):
-	    """Test the product string representation"""
-	    product = Product.objects.create(
-	        supplier = sample_supplier(),
-	        product_brand = "LCWikiki",
-	        product_name = "Jazb",
-	        product_description = "boland va shik va majlesi",
-	        product_available=True,
-	        discount_available=True,
-	        discount = 15,
-	        available_size= True,
-	        available_colors= True,
-	        size='Xlarg',
-	        color='white',
-	        weight_gram=0.2,
-	        units_in_stock=200,
-	        units_on_order_per_day=20,
-	        rainking=4.5,
-	        note="Its greate",
-	        )
+		"""Test the product string representation"""
+		product = Product.objects.create(
+			supplier = sample_supplier(),
+			category = sample_category(),
+			product_brand = "LCWikiki",
+			product_name = "Jazb",
+			product_description = "boland va shik va majlesi",
+			product_available=True,
+			discount_available=True,
+			discount = 15,
+			available_size= True,
+			available_colors= True,
+			size='Xlarg',
+			color='white',
+			weight_gram=0.2,
+			units_in_stock=200,
+			units_on_order_per_day=20,
+			rainking=4.5,
+			note="Its greate",
+			)
 
-	    self.assertEqual(str(product), product.product_name)
+		self.assertEqual(str(product), product.product_name)
 
 
+	def test_category_str(self):
+		"""Test the category sting representation"""
+		category = Category.objects.create(
+			category_type = 'Tshit',
+			)
+
+		self.assertEqual(str(category), category.category_type)
