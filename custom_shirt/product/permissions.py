@@ -31,18 +31,16 @@ class ProductPermission(permissions.BasePermission):
 class CategoryPermission(permissions.BasePermission):
 
 	def has_permission(self, request, view):
-		print("action : ", view.action,"****")
 		if view.action == 'create':
-			print("authenticated :", request.user.is_authenticated , "is_staff :", request.user.is_staff)
 			return request.user.is_authenticated and request.user.is_staff
 		elif view.action in ['retrieve', 'list']:
 			return True
 		else:
 			return False
 
-	def has_object_permission(self, request, view, obj):
-		"""
-		Return `True` if permission is granted, `False` otherwise.
-		"""
-		print(obj.categoty_type, "*_*_*_*_*_*")
-		return True
+	# def has_object_permission(self, request, view, obj):
+	# 	"""
+	# 	Return `True` if permission is granted, `False` otherwise.
+	# 	"""
+	# 	print(obj.categoty_type, "*_*_*_*_*_*")
+	# 	return True
