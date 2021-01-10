@@ -21,7 +21,7 @@ class PublicCategoryTest(TestCase):
 		"""Test for create required login"""
 		res = self.client.post(CATEGORY_URL,category_type="Musk")
 		
-		self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+		self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 	def test_retrieve_list_category(self):
 		"""Test retrieving list of categories"""
@@ -55,7 +55,7 @@ class PrivateCategoryTest(TestCase):
 
 	def test_create_category(self):
 		"""Create category just by staff"""
-		self.user.staff = True
+		self.user.is_staff = True
 
 		payload = {"category_type" : "MuskTest"}
 		res = self.client.post(CATEGORY_URL, payload)
@@ -64,5 +64,5 @@ class PrivateCategoryTest(TestCase):
 			category_type=payload["category_type"]
 			).exists()
 
-		self.assertEqual(res.status_code, status.HTTP_200_OK)
+		self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 		self.assertTrue(category_exist)

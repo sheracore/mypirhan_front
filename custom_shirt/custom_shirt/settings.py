@@ -44,6 +44,24 @@ INSTALLED_APPS = [
     'product',
 ]
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#     ),
+# }
+
+# JWT_AUTH = {
+#     'JWT_RESPONSE_PAYLOAD_HANDLER':
+#         'app.utils.jwt_response_payload_handler',
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30000),
+# }
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
