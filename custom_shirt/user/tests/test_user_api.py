@@ -6,7 +6,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 
-# 127.0.0.1:8000/user/create
+# 127.0.0.1:8000/api/user/create
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
 ME_URL = reverse('user:me')
@@ -29,7 +29,6 @@ class PublicUserApiTests(TestCase):
 			'email' : 'test@sheracore.com',
 			'password' : 'testpass',
 			'name' : 'test name'
-
 		}
 		# If you remember post data structure was json and know payload is
 		res = self.client.post(CREATE_USER_URL, payload)
