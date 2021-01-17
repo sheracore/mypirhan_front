@@ -44,11 +44,6 @@ class PrivateSupplierApiTests(TestCase):
 		company_name='tshirt 15 khordad',
 		type_good='catan'
 		)
-		Supplier.objects.create(
-		user=self.user,
-		company_name='tshirt tavlidisara',
-		type_good='nakh'
-		)
 		res = self.client.get(SUPPLIER_URL)
 
 		# supplier = Supplier.objects.all().order_by('-id')

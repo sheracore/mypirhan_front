@@ -2,7 +2,7 @@ from rest_framework import generics, authentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication 
 
 from user.serializers import UserSerializer, AuthTokenSerializer
 

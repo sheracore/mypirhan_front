@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.conf import settings # recommnded to retrieve setting from the django settings(custom_shit.setting)
 
 
-def recipe_image_file_path(instance, filename):
+def product_image_file_path(instance, filename):
     """Generate file path for new recipe image"""
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
@@ -71,7 +71,7 @@ class Supplier(models.Model):
 	type_good = models.CharField(max_length=64)
 	discount_type = models.CharField(max_length=64, null=True, blank=True)
 	url = models.URLField(max_length=100, null=True, unique=True, blank=True)
-	user = models.ForeignKey(
+	user = models.OneToOneField(
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE,
 		)
@@ -107,7 +107,7 @@ class Product(models.Model):
 	weight_gram = models.FloatField(null=True, blank=True)
 	units_in_stock = models.IntegerField(null=True, blank=True)
 	units_on_order_per_day = models.IntegerField(null=True, blank=True)
-	picture = models.ImageField(null=True, blank=True, upload_to=recipe_image_file_path)
+	picture = models.ImageField(null=True, blank=True, upload_to=product_image_file_path)
 	rainking= models.FloatField(null=True, blank=True)
 	note = models.CharField(max_length=512, null=True, blank=True)
 
