@@ -16,7 +16,7 @@ self.user = create_user(email='private@sheracore.com',password='testpass',name='
 http post http://127.0.0.1:8000/api/user/token/ email=private@sheracore.com password=testpass
 ```
 
-## Create your lovely shirt
+## Create your lovely custom shirt 
 ### Created by django by docker and docker-compose
 
 ## Database offers
