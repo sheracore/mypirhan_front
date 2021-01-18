@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from core.models import Supplier, Product, Category
+from core.models import Supplier, Product, Category, Shipper
 
 
 def sample_user(email='test@sheracore.com', password='testpass'):
@@ -114,9 +114,18 @@ class ModelTest(TestCase):
 
 
 	def test_category_str(self):
-		"""Test the category sting representation"""
+		"""Test the category string representation"""
 		category = Category.objects.create(
 			category_type = 'Tshit',
 			)
 
 		self.assertEqual(str(category), category.category_type)
+
+	def test_shipper_str(self):
+		"""Test the shipper string representation"""
+		payload = {"company_name" : "Post office"}
+		shipper = Shipper.objects.create(
+			user=sample_user(),
+			company_name=payload["company_name"]
+			)
+		self.assertEqual(str(shipper),payload["company_name"])

@@ -45,7 +45,7 @@ class User(AbstractBaseUser):
 	city = models.CharField(max_length=64, default='Tehran', null=True)
 	province = models.CharField(max_length=64, default='Tehran', null=True)
 	postal_code = models.CharField(max_length=32, null=True)
-	phone = models.CharField(max_length=12, null=True)
+	phone = models.CharField(max_length=11, null=True)
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
@@ -111,7 +111,17 @@ class Product(models.Model):
 	rainking= models.FloatField(null=True, blank=True)
 	note = models.CharField(max_length=512, null=True, blank=True)
 
-
-
 	def __str__(self):
 		return self.product_name
+
+
+class Shipper(models.Model):
+	"""Shipper to transfer product to the customer"""
+	user = models.OneToOneField(
+		settings.AUTH_USER_MODEL,
+		on_delete=models.CASCADE
+		)
+	company_name = models.CharField(max_length=64, blank=True)
+
+	def __str__(self):
+		return self.company_name
