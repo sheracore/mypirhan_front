@@ -14,7 +14,6 @@ class SupplierViewSet(viewsets.GenericViewSet,
 					 mixins.ListModelMixin,
 					 mixins.CreateModelMixin):
 	"""Manage Supplier in the database"""
-	authentication_classes = (JSONWebTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
 	queryset = Supplier.objects.all()
 	serializer_class = SupplierSerializer
@@ -34,7 +33,6 @@ class ProductViewSet(viewsets.GenericViewSet,
 					mixins.ListModelMixin,
 					mixins.CreateModelMixin):
 	"""Manage Product in the database"""
-	authentication_classes = (JSONWebTokenAuthentication,)
 	permission_classes = (ProductPermission,)
 	queryset = Product.objects.all()
 	serializer_class = ProductSerializer
@@ -43,7 +41,6 @@ class ProductViewSet(viewsets.GenericViewSet,
 class CategoryViewSet(viewsets.GenericViewSet,
 						mixins.ListModelMixin,
 						mixins.CreateModelMixin):
-	authentication_classes = (JSONWebTokenAuthentication,)
 	permission_classes = (CategoryPermission,)
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializer

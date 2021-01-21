@@ -1,5 +1,5 @@
 from rest_framework import generics, authentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication 
@@ -22,7 +22,6 @@ class CreateTokenView(ObtainAuthToken):
 class ManageUserView(generics.RetrieveUpdateAPIView):
 	"""Manage the authenticated view"""
 	serializer_class = UserSerializer
-	authentication_classes = (JSONWebTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
 
 	# We override get_object to just retrieve model for loged in user (self.request.user)
