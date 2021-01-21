@@ -1,7 +1,7 @@
-from rest_framework import permissions
+from rest_framework.permissions import BasePermission
 from rest_framework.authentication import TokenAuthentication
 
-class ProductPermission(permissions.BasePermission):
+class ProductPermission(BasePermission):
 
 	def has_permission(self, request, view):
 		if view.action == 'create':
@@ -28,7 +28,7 @@ class ProductPermission(permissions.BasePermission):
 		# else:
 		#     return False
 
-class CategoryPermission(permissions.BasePermission):
+class CategoryPermission(BasePermission):
 
 	def has_permission(self, request, view):
 		if view.action == 'create':

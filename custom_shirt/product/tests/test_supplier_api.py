@@ -77,7 +77,7 @@ class PrivateSupplierApiTests(TestCase):
 					'discount_type' : "percent",
 					'url' : 'http://www.pirhan.com'
 					}
-		self.client.post(SUPPLIER_URL, payload)
+		res = self.client.post(SUPPLIER_URL, payload)
 
 		supplier_exist = Supplier.objects.filter(
 			user=self.user,

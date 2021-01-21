@@ -46,7 +46,7 @@ class PrivateProductApiTest(TestCase):
 			"product_description" : "the best",
 			"size" : "mediom",
 			"supplier" : self.supplier.id,
-			"category" : self.category
+			"category" : self.category.id
 			}
 		res = self.client.post(PRODUCTS_URL, payload)
 		
@@ -99,18 +99,3 @@ class PrivateProductApiTest(TestCase):
 
 		res = self.client.post(PRODUCTS_URL, payload)
 		self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-
-
-	# def test_products_limited_to_supplier(self):
-	# 	"""Test that products for the """
-	# 	supplier2 = Supplier.objects.creaete(user=self.user)
-
-	# 	Product.objects.create(supplier=supplier2, product_name="mask")
-	# 	product = Product.objects.get(supplier=self.supplier, product_name="Mug")
-
-	# 	res = self.client.get(PRODUCTS_URL)
-
-	# 	self.assertEqual(res.status_code, status.HTTP_200_OK)
-	# 	self.assertEqual(len(res.data), 1)
-	# 	self.assertEqual(res.data[0]["name"], product.name)

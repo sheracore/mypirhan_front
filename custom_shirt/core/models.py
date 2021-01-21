@@ -121,7 +121,7 @@ class Shipper(models.Model):
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE
 		)
-	company_name = models.CharField(max_length=64, blank=True)
+	company_name = models.CharField(max_length=64)
 
 	def __str__(self):
 		return self.company_name
