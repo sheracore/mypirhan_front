@@ -64,8 +64,8 @@ class User(AbstractBaseUser):
 class Supplier(models.Model):
     """Supplier to be used for products"""
     """Instead of reffrence user object directly that we could do
-	   we ganna use best practice method to retrieving auth user model
-	   setting from django settings"""
+       we ganna use best practice method to retrieving auth user model
+       setting from django settings"""
     company_name = models.CharField(max_length=64)
     type_good = models.CharField(max_length=64)
     discount_type = models.CharField(max_length=64, null=True, blank=True)
@@ -80,7 +80,8 @@ class Supplier(models.Model):
 
 
 class Category(models.Model):
-    category_type = models.CharField(max_length=128, default='Tshirt')
+    category_type = models.CharField(
+        max_length=128, default='Tshirt', unique=True)
 
     def __str__(self):
         return self.category_type
@@ -89,14 +90,15 @@ class Category(models.Model):
 class Product(models.Model):
     """Supplier to be used for products"""
     """Instead of reffrence user object directly that we could do
-	   we ganna use best practice method to retrieving auth user model
-	   setting from django settings"""
+       we ganna use best practice method to retrieving auth user model
+       setting from django settings"""
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     product_brand = models.CharField(max_length=64)
     product_name = models.CharField(max_length=64)
     product_description = models.CharField(
         max_length=512, null=True, blank=True)
+    price_irr = models.IntegerField()
     product_available = models.BooleanField(default=True)
     discount_available = models.BooleanField(default=True)
     discount = models.FloatField(default=0.0)
@@ -146,3 +148,17 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.first_name
+
+        price_irr = models.Flo
+
+
+class OrderItemAppendCategory(models.Model):
+    """OrderItemAppendCategory use for OrderItemAppend """
+    type_name = models.CharField(max_length=128, unique=True)
+
+    def __str__(self):
+        return self.type_name
+
+
+# class OrderItemAppend(models.Model):
+    """OrderItemAppend use in custmizing products in order item"""

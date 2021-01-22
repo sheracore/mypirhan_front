@@ -1,7 +1,14 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from core.models import Supplier, Product, Category, Shipper, Customer
+from core.models import (
+    Supplier,
+    Product,
+    Category,
+    Shipper,
+    Customer,
+    OrderItemAppendCategory
+)
 
 
 def sample_user(email='test@sheracore.com', password='testpass'):
@@ -100,6 +107,7 @@ class ModelTest(TestCase):
             product_description="boland va shik va majlesi",
             product_available=True,
             discount_available=True,
+            price_irr=250000,
             discount=15,
             available_size=True,
             available_colors=True,
@@ -150,3 +158,14 @@ class ModelTest(TestCase):
         )
 
         self.assertEqual(str(customer), payload["first_name"])
+
+    def test_order_item_append_category_str(self):
+        """Test the OrderItemAppendCategory string representation"""
+        payload = {
+            "type_name": "sport"
+        }
+        order_item_append_category = OrderItemAppendCategory.objects.create(
+            type_name=payload["type_name"]
+        )
+
+        self.assertEqual(str(order_item_append_category), payload["type_name"])

@@ -60,7 +60,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=30000),
-    'JWT_ALLOW_REFRESH' : True,
+    'JWT_ALLOW_REFRESH': True,
     'JWT_ENCODE_HANDLER':
     'rest_framework_jwt.utils.jwt_encode_handler',
 
@@ -139,7 +139,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 
 # Password validation
