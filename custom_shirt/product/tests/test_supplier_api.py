@@ -15,81 +15,84 @@ SUPPLIER_URL = reverse('product:supplier-list')
 
 
 class PublicSupplierApiTests(TestCase):
-	"""Test the publicly available Suppliers API"""
+    """Test the publicly available Suppliers API"""
 
-	def setUp(self):
-		self.client = APIClient()
+    def setUp(self):
+        self.client = APIClient()
 
-	def test_login_required(self):
-		"""Test that login is required for retrieving suppliers"""
-		res = self.client.get(SUPPLIER_URL)
+    def test_login_required(self):
+        """Test that login is required for retrieving suppliers"""
+        res = self.client.get(SUPPLIER_URL)
 
-		self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class PrivateSupplierApiTests(TestCase):
-	"""Test the authorized user suppliers API"""
+    """Test the authorized user suppliers API"""
 
-	def setUp(self):
-		self.user = get_user_model().objects.create_user(
-			'test@sheracore.com',
-			'password123'
-			)
-		self.client = APIClient()
-		self.client.force_authenticate(self.user)
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            'test@sheracore.com',
+            'password123'
+        )
+        self.client = APIClient()
+        self.client.force_authenticate(self.user)
 
-	def test_retrieve_suppliers(self):
-		"""Test retrieving suppliers"""
-		Supplier.objects.create(
-		user=self.user,
-		company_name='tshirt 15 khordad',
-		type_good='catan'
-		)
-		res = self.client.get(SUPPLIER_URL)
+    def test_retrieve_suppliers(self):
+        """Test retrieving suppliers"""
+        Supplier.objects.create(
+            user=self.user,
+            company_name='tshirt 15 khordad',
+            type_good='catan'
+        )
+        res = self.client.get(SUPPLIER_URL)
 
-		# supplier = Supplier.objects.all().order_by('-id')
-		supplier = Supplier.objects.all().order_by('-company_name')
-		# we using serializer to return all suppliers --> many=True used for retrieve all suppliers
-		serializer = SupplierSerializer(supplier, many=True)
+        # supplier = Supplier.objects.all().order_by('-id')
+        supplier = Supplier.objects.all().order_by('-company_name')
+        # we using serializer to return all suppliers --> many=True
+        # used for retrieve all suppliers
+        serializer = SupplierSerializer(supplier, many=True)
 
-		self.assertEqual(res.status_code, status.HTTP_200_OK)
-		self.assertEqual(res.data, serializer.data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
 
-	def test_suppliers_limited_to_user(self):
-		"""Test that suppliers returned are for the authenticated user"""
-		user2 = get_user_model().objects.create_user(
-			'other@sheracore.com',
-			'testpass'
-			)
-		Supplier.objects.create(user=user2, company_name='jeenwest',type_good='Lee')
-		supplier = Supplier.objects.create(user=self.user, company_name='LC wikiki',type_good='Jacket')
+    def test_suppliers_limited_to_user(self):
+        """Test that suppliers returned are for the authenticated user"""
+        user2 = get_user_model().objects.create_user(
+            'other@sheracore.com',
+            'testpass'
+        )
+        Supplier.objects.create(
+            user=user2, company_name='jeenwest', type_good='Lee')
+        supplier = Supplier.objects.create(
+            user=self.user, company_name='LC wikiki', type_good='Jacket')
 
-		res = self.client.get(SUPPLIER_URL)
+        res = self.client.get(SUPPLIER_URL)
 
-		self.assertEqual(res.status_code, status.HTTP_200_OK)
-		self.assertEqual(len(res.data), 1)
-		self.assertEqual(res.data[0]['company_name'], supplier.company_name)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data[0]['company_name'], supplier.company_name)
 
-	def test_create_supplier_successful(self):
-		"""Test creating a new tag"""
-		payload = {
-					'company_name' : 'pirhansara',
-					'type_good' : 'tshirt',
-					'discount_type' : "percent",
-					'url' : 'http://www.pirhan.com'
-					}
-		res = self.client.post(SUPPLIER_URL, payload)
+    def test_create_supplier_successful(self):
+        """Test creating a new supplier"""
+        payload = {
+            'company_name': 'pirhansara',
+            'type_good': 'tshirt',
+            'discount_type': "percent",
+            'url': 'http://www.pirhan.com'
+        }
+        res = self.client.post(SUPPLIER_URL, payload)
 
-		supplier_exist = Supplier.objects.filter(
-			user=self.user,
-			company_name=payload['company_name']
-			).exists()
+        supplier_exist = Supplier.objects.filter(
+            user=self.user,
+            company_name=payload['company_name']
+        ).exists()
 
-		self.assertTrue(supplier_exist)
+        self.assertTrue(supplier_exist)
 
-	def test_create_supplier_invalid(self):
-		"""Test creating a new supplier with invalid payload"""
-		payload = {'namd' : ''}
-		res = self.client.post(SUPPLIER_URL, payload)
+    def test_create_supplier_invalid(self):
+        """Test creating a new supplier with invalid payload"""
+        payload = {'namd': ''}
+        res = self.client.post(SUPPLIER_URL, payload)
 
-		self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
