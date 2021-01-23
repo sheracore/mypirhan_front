@@ -1,3 +1,6 @@
+import uuid
+import os
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
@@ -6,11 +9,11 @@ from django.conf import settings
 
 
 def product_image_file_path(instance, filename):
-    """Generate file path for new recipe image"""
+    """Generate file path for new product image"""
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
 
-    return os.path.join('uploads/recipe/', filename)
+    return os.path.join('uploads/product/', filename)
 
 
 class UserManager(BaseUserManager):
@@ -39,7 +42,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     """Custom user model that suppors using email instead of username"""
     email = models.EmailField(max_length=64, unique=True)
-    name = models.CharField(max_length=64, null=True)
+    name = models.CharField(max_length=64)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -62,8 +65,8 @@ class Supplier(models.Model):
        setting from django settings"""
     company_name = models.CharField(max_length=64)
     type_good = models.CharField(max_length=64)
-    discount_type = models.CharField(max_length=64, null=True, blank=True)
-    url = models.URLField(max_length=100, null=True, unique=True, blank=True)
+    discount_type = models.CharField(max_length=64, null=True)
+    url = models.URLField(max_length=100, unique=True, null=True)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -91,7 +94,7 @@ class Product(models.Model):
     product_brand = models.CharField(max_length=64)
     product_name = models.CharField(max_length=64)
     product_description = models.CharField(
-        max_length=512, null=True, blank=True)
+        max_length=512, null=True)
     price_irr = models.IntegerField()
     product_available = models.BooleanField(default=True)
     discount_available = models.BooleanField(default=True)
@@ -100,13 +103,12 @@ class Product(models.Model):
     available_colors = models.BooleanField(default=True)
     size = models.CharField(max_length=64)
     color = models.CharField(max_length=64, default="No color")
-    weight_gram = models.FloatField(null=True, blank=True)
-    units_in_stock = models.IntegerField(null=True, blank=True)
-    units_on_order_per_day = models.IntegerField(null=True, blank=True)
-    picture = models.ImageField(
-        null=True, blank=True, upload_to=product_image_file_path)
-    rainking = models.FloatField(null=True, blank=True)
-    note = models.CharField(max_length=512, null=True, blank=True)
+    weight_gram = models.FloatField(null=True)
+    units_in_stock = models.IntegerField(null=True)
+    units_on_order_per_day = models.IntegerField(null=True)
+    image = models.ImageField(null=True, upload_to=product_image_file_path)
+    rainking = models.FloatField(null=True)
+    note = models.CharField(max_length=512, null=True)
 
     def __str__(self):
         return self.product_name
@@ -137,7 +139,7 @@ class Customer(models.Model):
     city = models.CharField(max_length=64, default='Tehran')
     province = models.CharField(max_length=64, default='Tehran')
     phone = models.CharField(max_length=11, unique=True)
-    postal_code = models.CharField(max_length=32, null=True, blank=True)
+    postal_code = models.CharField(max_length=32, null=True)
     country = models.CharField(max_length=64, default='IRAN')
 
     def __str__(self):
@@ -154,5 +156,11 @@ class OrderItemAppendCategory(models.Model):
         return self.type_name
 
 
-# class OrderItemAppend(models.Model):
+class OrderItemAppend(models.Model):
     """OrderItemAppend use in custmizing products in order item"""
+    order_item_append_category = models.ForeignKey(
+        OrderItemAppendCategory, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name

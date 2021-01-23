@@ -7,7 +7,7 @@ class SupplierSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Supplier
-        fields = ('id', 'company_name', 'type_good', 'discount_type', 'url', 'user')
+        fields = ('id', 'company_name', 'type_good', 'discount_type', 'url')
         read_only_fields = ('id',)
 
 

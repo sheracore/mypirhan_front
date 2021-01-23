@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -7,7 +9,10 @@ from core.models import (
     Category,
     Shipper,
     Customer,
-    OrderItemAppendCategory
+    OrderItemAppendCategory,
+    OrderItemAppend,
+    product_image_file_path,
+
 )
 
 
@@ -169,3 +174,31 @@ class ModelTest(TestCase):
         )
 
         self.assertEqual(str(order_item_append_category), payload["type_name"])
+
+    def test_order_item_append_str(self):
+        """Test order item append string representation"""
+        order_item_append_category = OrderItemAppendCategory.objects.create(
+            type_name='Sport'
+        )
+        payload = {
+            "name": "Messi",
+
+        }
+        order_item_append = OrderItemAppend.objects.create(
+            name=payload["name"],
+            order_item_append_category=order_item_append_category
+        )
+
+        self.assertEqual(str(order_item_append), payload["name"])
+
+    @patch('uuid.uuid4')
+    def test_product_file_name_uuid(self, mock_uuid):
+        """Test that image is saved in the correct locations"""
+        uuid = 'test-uuid'
+        # Overriding uuid to test-uuid
+        mock_uuid.return_value = uuid
+        file_path = product_image_file_path(None, 'myimage.jpg')
+
+        exp_path = f'uploads/product/{uuid}.jpg'
+
+        self.assertEqual(file_path, exp_path)
