@@ -40,12 +40,6 @@ class User(AbstractBaseUser):
     """Custom user model that suppors using email instead of username"""
     email = models.EmailField(max_length=64, unique=True)
     name = models.CharField(max_length=64, null=True)
-    address1 = models.CharField(max_length=255, null=True)
-    address2 = models.CharField(max_length=255, null=True)
-    city = models.CharField(max_length=64, default='Tehran', null=True)
-    province = models.CharField(max_length=64, default='Tehran', null=True)
-    postal_code = models.CharField(max_length=32, null=True)
-    phone = models.CharField(max_length=11, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
