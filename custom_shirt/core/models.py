@@ -16,6 +16,14 @@ def product_image_file_path(instance, filename):
     return os.path.join('uploads/product/', filename)
 
 
+def order_item_append_image_file_path(instance, filename):
+    """Generate file path for new product image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/order_item_append/', filename)
+
+
 class UserManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -161,6 +169,7 @@ class OrderItemAppend(models.Model):
     order_item_append_category = models.ForeignKey(
         OrderItemAppendCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
+    image = models.ImageField(upload_to=order_item_append_image_file_path)
 
     def __str__(self):
         return self.name
