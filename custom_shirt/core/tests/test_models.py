@@ -182,13 +182,11 @@ class ModelTest(TestCase):
         )
         payload = {
             "name": "Messi",
-
         }
         order_item_append = OrderItemAppend.objects.create(
             name=payload["name"],
             order_item_append_category=order_item_append_category
         )
-
         self.assertEqual(str(order_item_append), payload["name"])
 
     @patch('uuid.uuid4')

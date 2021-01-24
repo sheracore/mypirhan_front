@@ -1,3 +1,7 @@
+import io
+
+from django.core.files import File
+
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -5,12 +9,23 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
+from PIL import Image
+
 from core.models import Product, Supplier, Category
 
 from product.serializers import ProductSerializer
 
 
 PRODUCTS_URL = reverse('product:product-list')
+
+
+def generate_photo_file(file_name):
+    file = io.BytesIO()
+    image = Image.new('RGBA', size=(100, 100), color=(155, 0, 0))
+    image.save(file, 'png')
+    file.name = file_name
+    file.seek(0)
+    return file
 
 
 class PublicProductApiTest(TestCase):
@@ -80,12 +95,16 @@ class PrivateProductApiTest(TestCase):
 
     def test_create_product_successfull(self):
         """Test create a new product just by staff"""
+        image_name = 'test.png'
+        image = generate_photo_file(image_name)
+
         payload = {
             "product_name": "lbaskordi",
             "product_brand": "saqqez",
             "product_description": "the best",
             "size": "mediom",
             "price_irr": 250000,
+            "image": image,
             "supplier": self.supplier.id,
             "category": self.category.id
         }

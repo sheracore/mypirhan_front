@@ -114,7 +114,7 @@ class Product(models.Model):
     weight_gram = models.FloatField(null=True)
     units_in_stock = models.IntegerField(null=True)
     units_on_order_per_day = models.IntegerField(null=True)
-    image = models.ImageField(null=True, upload_to=product_image_file_path)
+    image = models.ImageField(upload_to=product_image_file_path)
     rainking = models.FloatField(null=True)
     note = models.CharField(max_length=512, null=True)
 
