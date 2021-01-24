@@ -23,7 +23,7 @@ class PublicOrderItemAppendCategoryApiTest(TestCase):
             'testpass'
         )
 
-    def test_retrieve_all_OrderItemAppendCategories(self):
+    def test_retrieve_order_item_append_categories(self):
         """Test retriving OrderItemAppendCategories"""
         OrderItemAppendCategory.objects.create(
             type_name='sport_test',
@@ -51,7 +51,7 @@ class PrivateOrderItemAppendCategoryApiTest(TestCase):
         )
         self.client.force_authenticate(self.user)
 
-    def order_item_append_category(self):
+    def test_create_order_item_append_category(self):
         """Test creating OrderItemAppendCategory"""
         payload = {
             "type_name": "Logo test",
@@ -59,11 +59,14 @@ class PrivateOrderItemAppendCategoryApiTest(TestCase):
         self.user.is_staff = True
 
         res = self.client.post(ORDERITEMAPPENDCATEGORY_URL, payload)
+        exist = OrderItemAppendCategory.objects.filter(
+            type_name=payload["type_name"]).exists()
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(exist)
 
     def test_create_order_item_append_category_invalid(self):
-        """Test creating a new supplier with invalid payload"""
+        """Test creating a new order item append category with invalid payload"""
         self.user.is_staff = True
         payload = {'type_name': ''}
         res = self.client.post(ORDERITEMAPPENDCATEGORY_URL, payload)

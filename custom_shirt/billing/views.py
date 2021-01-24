@@ -2,10 +2,12 @@ from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from billing.serializers import (ShipperSerializer,
-                                 OrderItemAppendCategorySerializer)
-from billing.permissions import OrderItemAppendCategoryPermissions
+                                 OrderItemAppendCategorySerializer,
+                                 OrderItemAppendSerializer)
+from billing.permissions import (OrderItemAppendCategoryPermissions,
+                                 OrderItemAppendPermissions)
 
-from core.models import Shipper, OrderItemAppendCategory
+from core.models import Shipper, OrderItemAppendCategory, OrderItemAppend
 
 
 class ShipperViewSet(viewsets.GenericViewSet,
@@ -30,7 +32,16 @@ class ShipperViewSet(viewsets.GenericViewSet,
 class OrderItemAppendCategoryViewSet(viewsets.GenericViewSet,
                                      mixins.ListModelMixin,
                                      mixins.CreateModelMixin):
-    """Manage Shipper in the database"""
+    """Manage OrderItemAppendCategory in the database"""
     permission_classes = (OrderItemAppendCategoryPermissions,)
     queryset = OrderItemAppendCategory.objects.all()
     serializer_class = OrderItemAppendCategorySerializer
+
+
+class OrderItemAppendViewSet(viewsets.GenericViewSet,
+                             mixins.CreateModelMixin,
+                             mixins.ListModelMixin):
+    """Manage OrderItemAppend in the database"""
+    permission_classes = (OrderItemAppendPermissions,)
+    queryset = OrderItemAppend.objects.all()
+    serializer_class = OrderItemAppendSerializer

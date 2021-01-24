@@ -10,6 +10,7 @@ router = DefaultRouter()
 router.register('shippers', views.ShipperViewSet)
 router.register('orderitemappendcategory',
                 views.OrderItemAppendCategoryViewSet)
+router.register('orderitemappend', views.OrderItemAppendViewSet)
 
 app_name = 'billing'
 
