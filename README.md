@@ -1,5 +1,5 @@
 # I never ever give up
-# sherashirt
+# Custom shirt (CS)
 ## Endpoints
 ```
 Notice that put function is for entire object but by patch you can only update values you provide
