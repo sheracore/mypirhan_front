@@ -47,10 +47,12 @@ class PublicOrderItemAppendApiTest(TestCase):
         orderitemappendcategoroy = orderitemappendcategoroy_sample()
         OrderItemAppend.objects.create(
             name='Messi',
+            order_item_append_price_irr=10000,
             order_item_append_category=orderitemappendcategoroy
         )
         OrderItemAppend.objects.create(
             name='Crisriano',
+            order_item_append_price_irr=10000,
             order_item_append_category=orderitemappendcategoroy
         )
 
@@ -81,6 +83,7 @@ class PriveteOrderItemAppendApi(TestCase):
         payload = {
             "name": 'messi_test',
             "order_item_append_category": orderitemappendcategoroy.id,
+            "order_item_append_price_irr": 10000,
             "image": image
         }
         res = self.client.post(ORDERITEMAPPEND_URL, payload)

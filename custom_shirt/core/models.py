@@ -153,8 +153,6 @@ class Customer(models.Model):
     def __str__(self):
         return self.first_name
 
-        price_irr = models.Flo
-
 
 class OrderItemAppendCategory(models.Model):
     """OrderItemAppendCategory use for OrderItemAppend """
@@ -169,7 +167,23 @@ class OrderItemAppend(models.Model):
     order_item_append_category = models.ForeignKey(
         OrderItemAppendCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
+    order_item_append_price_irr = models.IntegerField()
     image = models.ImageField(upload_to=order_item_append_image_file_path)
 
     def __str__(self):
         return self.name
+
+
+class OrderItem(models.Model):
+    """OrderItem to store edited products and its price"""
+    product_brand = models.CharField(max_length=64)
+    product_name = models.CharField(max_length=64)
+    product_description = models.CharField(
+        max_length=512, null=True)
+    price_irr = models.IntegerField()
+    discount = models.FloatField(default=0.0)
+    available_colors = models.BooleanField(default=True)
+    size = models.CharField(max_length=64)
+    color = models.CharField(max_length=64, default="No color")
+    weight_gram = models.FloatField(null=True)
+    image = models.ImageField(upload_to=product_image_file_path)

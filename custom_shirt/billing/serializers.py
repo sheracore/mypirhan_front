@@ -26,5 +26,6 @@ class OrderItemAppendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItemAppend
-        fields = ('id', 'name', 'image', 'order_item_append_category')
+        fields = ('id', 'name', 'image', 'order_item_append_category',
+                  'order_item_append_price_irr')
         read_only_fields = ('id',)
