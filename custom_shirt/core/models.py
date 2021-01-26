@@ -162,6 +162,25 @@ class OrderItemAppendCategory(models.Model):
         return self.type_name
 
 
+class OrderItem(models.Model):
+    """OrderItem to store edited products and its price"""
+    # order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    product_brand = models.CharField(max_length=64)
+    product_name = models.CharField(max_length=64)
+    product_description = models.CharField(
+        max_length=512, null=True)
+    # Its contain product price and orderitemappend price
+    price_irr = models.IntegerField()
+    total_price_irr = models.IntegerField()  # Total = quantity * price_irr
+    discount = models.FloatField(default=0.0)
+    size = models.CharField(max_length=64)
+    color = models.CharField(max_length=64, default="No color")
+    weight_gram = models.FloatField(null=True)
+    product_image_url = models.CharField(max_length=100)
+    final_image = models.ImageField(*************)
+
+
 class OrderItemAppend(models.Model):
     """OrderItemAppend use in custmizing products in order item"""
     order_item_append_category = models.ForeignKey(
@@ -172,18 +191,3 @@ class OrderItemAppend(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class OrderItem(models.Model):
-    """OrderItem to store edited products and its price"""
-    product_brand = models.CharField(max_length=64)
-    product_name = models.CharField(max_length=64)
-    product_description = models.CharField(
-        max_length=512, null=True)
-    price_irr = models.IntegerField()
-    discount = models.FloatField(default=0.0)
-    available_colors = models.BooleanField(default=True)
-    size = models.CharField(max_length=64)
-    color = models.CharField(max_length=64, default="No color")
-    weight_gram = models.FloatField(null=True)
-    image = models.ImageField(upload_to=product_image_file_path)

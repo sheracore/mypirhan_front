@@ -12,6 +12,7 @@ from core.models import (
     OrderItemAppendCategory,
     OrderItemAppend,
     product_image_file_path,
+    OrderItem,
 
 )
 
@@ -37,6 +38,22 @@ def sample_category():
     return Category.objects.create(
         category_type='Tshirt',
     )
+
+
+# def sample_order_item():
+#     """Create sample order_item object"""
+#     return OrderItem.objects.create(
+#         quantity=4,
+#         product_brand="LCWikiki",
+#         product_name="Jazb",
+#         product_description="boland va shik va majlesi",
+#         price_irr=250000,
+#         total_price_irr=1000000,
+#         size='Xlarg',
+#         color='white',
+#         weight_gram=120,
+#         product_image_url="uploads/product/0f316069-46b0-4a62-b013-e9b79a505f96.png"
+#     )
 
 
 class ModelTest(TestCase):
