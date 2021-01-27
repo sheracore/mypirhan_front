@@ -1,7 +1,7 @@
 from rest_framework.permissions import BasePermission
 
 
-class OrderItemAppendCategoryPermissions(BasePermission):
+class DesignAppendCategoryPermissions(BasePermission):
     """Create permissions for OrderItemAppendCategory"""
 
     def has_permission(self, request, view):
@@ -23,7 +23,7 @@ class OrderItemAppendCategoryPermissions(BasePermission):
         return True
 
 
-class OrderItemAppendPermissions(BasePermission):
+class DesignAppendPermissions(BasePermission):
     """Creare permissions for OrderItemAppend"""
 
     def has_permission(self, request, view):

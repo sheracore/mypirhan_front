@@ -5,16 +5,16 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-from core.models import OrderItemAppendCategory
+from core.models import DesignAppendCategory
 
-from billing.serializers import OrderItemAppendCategorySerializer
-
-
-ORDERITEMAPPENDCATEGORY_URL = reverse('billing:orderitemappendcategory-list')
+from billing.serializers import DesignAppendCategorySerializer
 
 
-class PublicOrderItemAppendCategoryApiTest(TestCase):
-    """Private test on OrderItemAppendCategory api"""
+ORDERITEMAPPENDCATEGORY_URL = reverse('billing:designappendcategory-list')
+
+
+class PublicDesignAppendCategoryApiTest(TestCase):
+    """Private test on DesignAppendCategory api"""
 
     def setUp(self):
         self.client = APIClient()
@@ -23,25 +23,25 @@ class PublicOrderItemAppendCategoryApiTest(TestCase):
             'testpass'
         )
 
-    def test_retrieve_order_item_append_categories(self):
+    def test_retrieve_degin_append_categories(self):
         """Test retriving OrderItemAppendCategories"""
-        OrderItemAppendCategory.objects.create(
+        DesignAppendCategory.objects.create(
             type_name='sport_test',
         )
-        OrderItemAppendCategory.objects.create(
+        DesignAppendCategory.objects.create(
             type_name='Art_test',
         )
         res = self.client.get(ORDERITEMAPPENDCATEGORY_URL)
 
-        order_item_append_category = OrderItemAppendCategory.objects.all().order_by('-type_name')
-        serializer = OrderItemAppendCategorySerializer(
-            order_item_append_category, many=True)
+        design_append_category = DesignAppendCategory.objects.all().order_by('-type_name')
+        serializer = DesignAppendCategorySerializer(
+            design_append_category, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
 
-class PrivateOrderItemAppendCategoryApiTest(TestCase):
+class PrivateDesignAppendCategoryApiTest(TestCase):
 
     def setUp(self):
         self.client = APIClient()
@@ -51,21 +51,21 @@ class PrivateOrderItemAppendCategoryApiTest(TestCase):
         )
         self.client.force_authenticate(self.user)
 
-    def test_create_order_item_append_category(self):
-        """Test creating OrderItemAppendCategory"""
+    def test_create_design_append_category(self):
+        """Test creating DesignAppendCategory"""
         payload = {
             "type_name": "Logo test",
         }
         self.user.is_staff = True
 
         res = self.client.post(ORDERITEMAPPENDCATEGORY_URL, payload)
-        exist = OrderItemAppendCategory.objects.filter(
+        exist = DesignAppendCategory.objects.filter(
             type_name=payload["type_name"]).exists()
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertTrue(exist)
 
-    def test_create_order_item_append_category_invalid(self):
+    def test_create_design_append_category_invalid(self):
         """Test creating a new order item append category with invalid payload"""
         self.user.is_staff = True
         payload = {'type_name': ''}

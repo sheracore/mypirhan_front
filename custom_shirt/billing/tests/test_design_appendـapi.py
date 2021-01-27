@@ -9,12 +9,12 @@ from rest_framework import status
 
 from PIL import Image
 
-from core.models import OrderItemAppend, OrderItemAppendCategory
+from core.models import DesignAppend, DesignAppendCategory
 
-from billing.serializers import OrderItemAppendSerializer
+from billing.serializers import DesignAppendSerializer
 
 
-ORDERITEMAPPEND_URL = reverse('billing:orderitemappend-list')
+DESIGNAPPEND_URL = reverse('billing:designappend-list')
 
 
 def generate_photo_file(file_name):
@@ -26,14 +26,14 @@ def generate_photo_file(file_name):
     return file
 
 
-def orderitemappendcategoroy_sample(type_name='Sport'):
-    return OrderItemAppendCategory.objects.create(
+def designappendcategoroy_sample(type_name='Sport'):
+    return DesignAppendCategory.objects.create(
         type_name=type_name
     )
 
 
 class PublicOrderItemAppendApiTest(TestCase):
-    """Public test on OrderItemAppend api"""
+    """Public test on DesignAppend api"""
 
     def setUp(self):
         self.client = APIClient()
@@ -42,30 +42,30 @@ class PublicOrderItemAppendApiTest(TestCase):
             'testpass'
         )
 
-    def test_retrieve_order_item_append(self):
+    def test_retrieve_design_append(self):
         """Test retrieving order item appends"""
-        orderitemappendcategoroy = orderitemappendcategoroy_sample()
-        OrderItemAppend.objects.create(
+        designappendcategoroy = designappendcategoroy_sample()
+        DesignAppend.objects.create(
             name='Messi',
-            order_item_append_price_irr=10000,
-            order_item_append_category=orderitemappendcategoroy
+            design_append_price_irr=10000,
+            design_append_category=designappendcategoroy
         )
-        OrderItemAppend.objects.create(
+        DesignAppend.objects.create(
             name='Crisriano',
-            order_item_append_price_irr=10000,
-            order_item_append_category=orderitemappendcategoroy
+            design_append_price_irr=10000,
+            design_append_category=designappendcategoroy
         )
 
-        res = self.client.get(ORDERITEMAPPEND_URL)
+        res = self.client.get(DESIGNAPPEND_URL)
 
-        orderitemappend = OrderItemAppend.objects.all().order_by('-name')
-        serializer = OrderItemAppendSerializer(orderitemappend, many=True)
+        designappend = DesignAppend.objects.all().order_by('-name')
+        serializer = DesignAppendSerializer(designappend, many=True)
 
         self.assertEqual(res.data, serializer.data)
 
 
-class PriveteOrderItemAppendApi(TestCase):
-    """Public test on OrderItemAppend api"""
+class PriveteDesignAppendApi(TestCase):
+    """Public test on DesignAppend api"""
 
     def setUp(self):
         self.client = APIClient()
@@ -75,29 +75,29 @@ class PriveteOrderItemAppendApi(TestCase):
         )
         self.client.force_authenticate(self.user)
 
-    def test_create_order_item_append(self):
+    def test_create_design_append(self):
         """Test create order item append"""
         self.user.is_staff = True
-        orderitemappendcategoroy = orderitemappendcategoroy_sample()
+        designappendcategoroy = designappendcategoroy_sample()
         image = generate_photo_file('image1.png')
         payload = {
             "name": 'messi_test',
-            "order_item_append_category": orderitemappendcategoroy.id,
-            "order_item_append_price_irr": 10000,
+            "design_append_category": designappendcategoroy.id,
+            "design_append_price_irr": 10000,
             "image": image
         }
-        res = self.client.post(ORDERITEMAPPEND_URL, payload)
+        res = self.client.post(DESIGNAPPEND_URL, payload)
 
-        exist = OrderItemAppend.objects.filter(
+        exist = DesignAppend.objects.filter(
             name=payload["name"]).exists()
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertTrue(exist)
 
-    def test_create_order_item_append_invalid(self):
+    def test_create_design_append_invalid(self):
         """Test creating a new orderitemappend with invalid payload"""
         self.user.is_staff = True
         payload = {'name': ''}
-        res = self.client.post(ORDERITEMAPPEND_URL, payload)
+        res = self.client.post(DESIGNAPPEND_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

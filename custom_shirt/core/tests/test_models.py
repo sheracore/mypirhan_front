@@ -9,8 +9,8 @@ from core.models import (
     Category,
     Shipper,
     Customer,
-    OrderItemAppendCategory,
-    OrderItemAppend,
+    DesignAppendCategory,
+    DesignAppend,
     product_image_file_path,
     OrderItem,
 
@@ -40,8 +40,8 @@ def sample_category():
     )
 
 
-# def sample_order_item():
-#     """Create sample order_item object"""
+# def sample_design():
+#     """Create sample design object"""
 #     return OrderItem.objects.create(
 #         quantity=4,
 #         product_brand="LCWikiki",
@@ -181,32 +181,32 @@ class ModelTest(TestCase):
 
         self.assertEqual(str(customer), payload["first_name"])
 
-    def test_order_item_append_category_str(self):
-        """Test the OrderItemAppendCategory string representation"""
+    def test_design_append_category_str(self):
+        """Test the DesignAppend string representation"""
         payload = {
             "type_name": "sport"
         }
-        order_item_append_category = OrderItemAppendCategory.objects.create(
+        design_append_category = DesignAppendCategory.objects.create(
             type_name=payload["type_name"]
         )
 
-        self.assertEqual(str(order_item_append_category), payload["type_name"])
+        self.assertEqual(str(design_append_category), payload["type_name"])
 
-    def test_order_item_append_str(self):
-        """Test order item append string representation"""
-        order_item_append_category = OrderItemAppendCategory.objects.create(
+    def test_design_append_str(self):
+        """Test design append string representation"""
+        design_append_category = DesignAppendCategory.objects.create(
             type_name='Sport'
         )
         payload = {
             "name": "Messi",
-            "order_item_append_price_irr": 10000
+            "design_append_price_irr": 10000
         }
-        order_item_append = OrderItemAppend.objects.create(
+        design_append = DesignAppend.objects.create(
             name=payload["name"],
-            order_item_append_price_irr=payload["order_item_append_price_irr"],
-            order_item_append_category=order_item_append_category
+            design_append_price_irr=payload["design_append_price_irr"],
+            design_append_category=design_append_category
         )
-        self.assertEqual(str(order_item_append), payload["name"])
+        self.assertEqual(str(design_append), payload["name"])
 
     @patch('uuid.uuid4')
     def test_product_file_name_uuid(self, mock_uuid):

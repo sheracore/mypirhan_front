@@ -2,12 +2,12 @@ from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from billing.serializers import (ShipperSerializer,
-                                 OrderItemAppendCategorySerializer,
-                                 OrderItemAppendSerializer)
-from billing.permissions import (OrderItemAppendCategoryPermissions,
-                                 OrderItemAppendPermissions)
+                                 DesignAppendCategorySerializer,
+                                 DesignAppendSerializer)
+from billing.permissions import (DesignAppendCategoryPermissions,
+                                 DesignAppendPermissions)
 
-from core.models import Shipper, OrderItemAppendCategory, OrderItemAppend
+from core.models import Shipper, DesignAppendCategory, DesignAppend
 
 
 class ShipperViewSet(viewsets.GenericViewSet,
@@ -29,19 +29,19 @@ class ShipperViewSet(viewsets.GenericViewSet,
         serializer.save(user=self.request.user)
 
 
-class OrderItemAppendCategoryViewSet(viewsets.GenericViewSet,
-                                     mixins.ListModelMixin,
-                                     mixins.CreateModelMixin):
+class DesignAppendCategoryViewSet(viewsets.GenericViewSet,
+                                  mixins.ListModelMixin,
+                                  mixins.CreateModelMixin):
     """Manage OrderItemAppendCategory in the database"""
-    permission_classes = (OrderItemAppendCategoryPermissions,)
-    queryset = OrderItemAppendCategory.objects.all()
-    serializer_class = OrderItemAppendCategorySerializer
+    permission_classes = (DesignAppendCategoryPermissions,)
+    queryset = DesignAppendCategory.objects.all()
+    serializer_class = DesignAppendCategorySerializer
 
 
-class OrderItemAppendViewSet(viewsets.GenericViewSet,
-                             mixins.CreateModelMixin,
-                             mixins.ListModelMixin):
+class DesignAppendViewSet(viewsets.GenericViewSet,
+                          mixins.CreateModelMixin,
+                          mixins.ListModelMixin):
     """Manage OrderItemAppend in the database"""
-    permission_classes = (OrderItemAppendPermissions,)
-    queryset = OrderItemAppend.objects.all()
-    serializer_class = OrderItemAppendSerializer
+    permission_classes = (DesignAppendPermissions,)
+    queryset = DesignAppend.objects.all()
+    serializer_class = DesignAppendSerializer

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Shipper, OrderItemAppendCategory, OrderItemAppend
+from core.models import Shipper, DesignAppendCategory, DesignAppend
 
 
 class ShipperSerializer(serializers.ModelSerializer):
@@ -12,20 +12,20 @@ class ShipperSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
 
-class OrderItemAppendCategorySerializer(serializers.ModelSerializer):
+class DesignAppendCategorySerializer(serializers.ModelSerializer):
     """Seializer for OrderItemAppendCategory object"""
 
     class Meta:
-        model = OrderItemAppendCategory
+        model = DesignAppendCategory
         fields = ('id', 'type_name')
         read_only_fields = ("id",)
 
 
-class OrderItemAppendSerializer(serializers.ModelSerializer):
+class DesignAppendSerializer(serializers.ModelSerializer):
     """Serializer for OrderItemAppend objects"""
 
     class Meta:
-        model = OrderItemAppend
+        model = DesignAppend
         fields = ('id', 'name', 'image', 'order_item_append_category',
                   'order_item_append_price_irr')
         read_only_fields = ('id',)

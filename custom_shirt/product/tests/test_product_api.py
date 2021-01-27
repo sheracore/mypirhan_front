@@ -93,8 +93,12 @@ class PrivateProductApiTest(TestCase):
 
     def test_create_product_successfull(self):
         """Test create a new product just by staff"""
-        image_name = 'test.png'
-        image = generate_photo_file(image_name)
+        image_front_name = 'test_front.png'
+        image_back_name = 'test_back.png'
+        image_side_name = 'test_side.png'
+        image_front = generate_photo_file(image_front_name)
+        image_back = generate_photo_file(image_back_name)
+        image_side = generate_photo_file(image_side_name)
 
         payload = {
             "product_name": "lbaskordi",
@@ -102,7 +106,9 @@ class PrivateProductApiTest(TestCase):
             "product_description": "the best",
             "size": "mediom",
             "price_irr": 250000,
-            "image": image,
+            "image_front": image_front,
+            "image_back": image_back,
+            "image_side": image_side,
             "supplier": self.supplier.id,
             "category": self.category.id
         }

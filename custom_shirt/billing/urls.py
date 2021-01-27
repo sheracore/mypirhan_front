@@ -8,9 +8,9 @@ from billing import views
 router = DefaultRouter()
 
 router.register('shippers', views.ShipperViewSet)
-router.register('orderitemappendcategory',
-                views.OrderItemAppendCategoryViewSet)
-router.register('orderitemappend', views.OrderItemAppendViewSet)
+router.register('designappendcategory',
+                views.DesignAppendCategoryViewSet)
+router.register('designappend', views.DesignAppendViewSet)
 
 app_name = 'billing'
 

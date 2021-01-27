@@ -16,12 +16,20 @@ def product_image_file_path(instance, filename):
     return os.path.join('uploads/product/', filename)
 
 
-def order_item_append_image_file_path(instance, filename):
+def design_append_image_file_path(instance, filename):
     """Generate file path for new product image"""
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
 
-    return os.path.join('uploads/order_item_append/', filename)
+    return os.path.join('uploads/design_append/', filename)
+
+
+def design_image_file_path(instance, filename):
+    """Generate file path for new product image"""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
+
+    return os.path.join('uploads/design/', filename)
 
 
 class UserManager(BaseUserManager):
@@ -114,7 +122,9 @@ class Product(models.Model):
     weight_gram = models.FloatField(null=True)
     units_in_stock = models.IntegerField(null=True)
     units_on_order_per_day = models.IntegerField(null=True)
-    image = models.ImageField(upload_to=product_image_file_path)
+    image_front = models.ImageField(upload_to=product_image_file_path)
+    image_back = models.ImageField(upload_to=product_image_file_path)
+    image_side = models.ImageField(upload_to=product_image_file_path)
     rainking = models.FloatField(null=True)
     note = models.CharField(max_length=512, null=True)
 
@@ -154,7 +164,7 @@ class Customer(models.Model):
         return self.first_name
 
 
-class OrderItemAppendCategory(models.Model):
+class DesignAppendCategory(models.Model):
     """OrderItemAppendCategory use for OrderItemAppend """
     type_name = models.CharField(max_length=128, unique=True)
 
@@ -177,17 +187,18 @@ class OrderItem(models.Model):
     size = models.CharField(max_length=64)
     color = models.CharField(max_length=64, default="No color")
     weight_gram = models.FloatField(null=True)
-    product_image_url = models.CharField(max_length=100)
-    final_image = models.ImageField(*************)
+    product_image_front = models.ImageField(
+        upload_to=design_image_file_path)
+    # final_image = models.ImageField(*************)
 
 
-class OrderItemAppend(models.Model):
+class DesignAppend(models.Model):
     """OrderItemAppend use in custmizing products in order item"""
-    order_item_append_category = models.ForeignKey(
-        OrderItemAppendCategory, on_delete=models.CASCADE)
+    design_append_category = models.ForeignKey(
+        DesignAppendCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    order_item_append_price_irr = models.IntegerField()
-    image = models.ImageField(upload_to=order_item_append_image_file_path)
+    design_append_price_irr = models.IntegerField()
+    image = models.ImageField(upload_to=design_append_image_file_path)
 
     def __str__(self):
         return self.name
