@@ -124,7 +124,8 @@ class Product(models.Model):
     units_on_order_per_day = models.IntegerField(null=True)
     image_front = models.ImageField(upload_to=product_image_file_path)
     image_back = models.ImageField(upload_to=product_image_file_path)
-    image_side = models.ImageField(upload_to=product_image_file_path)
+    image_side_left = models.ImageField(upload_to=product_image_file_path)
+    image_side_right = models.ImageField(upload_to=product_image_file_path)
     rainking = models.FloatField(null=True)
     note = models.CharField(max_length=512, null=True)
 

@@ -26,6 +26,6 @@ class DesignAppendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DesignAppend
-        fields = ('id', 'name', 'image', 'order_item_append_category',
-                  'order_item_append_price_irr')
+        fields = ('id', 'name', 'image', 'design_append_category',
+                  'design_append_price_irr')
         read_only_fields = ('id',)
