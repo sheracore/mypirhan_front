@@ -224,6 +224,7 @@ class ModelTest(TestCase):
         """Create order item when a purches occured"""
         product_name = "BillMir"
         order_item = OrderItem.objects.create(
+            product_id=1,
             quantity=3,
             product_brand="LC",
             product_name=product_name,

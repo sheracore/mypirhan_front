@@ -176,7 +176,7 @@ class DesignAppendCategory(models.Model):
 class OrderItem(models.Model):
     """OrderItem to store edited products and its price"""
     # order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product_id = mdoels.IntegerField()
+    product_id = models.IntegerField()
     quantity = models.IntegerField()
     product_brand = models.CharField(max_length=64)
     product_name = models.CharField(max_length=64)

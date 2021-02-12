@@ -13,7 +13,7 @@ from billing.serializers import OrderItemSerializer
 from PIL import Image
 
 
-PRODUCTS_URL = reverse('product:product-list')
+# PRODUCTS_URL = reverse('product:product-list')
 ORDERITEM_URL = reverse("billing:orderitem-list")
 
 
@@ -36,15 +36,16 @@ class PrivateOrderItemApiTest(TestCase):
             "testpass"
         )
         self.client.force_authenticate(self.user)
-        self.supplier = Supplier.objects.create(
-            user=self.user,
-            company_name='Pirhansara 16 xordad',
-            type_good="Tshirt")
-        self.category = Category.objects.create(category_type="Thirt")
+        # self.supplier = Supplier.objects.create(
+        #     user=self.user,
+        #     company_name='Pirhansara 16 xordad',
+        #     type_good="Tshirt")
+        # self.category = Category.objects.create(category_type="Thirt")
 
     def test_retrieve_order_item_list(self):
         """test retrieving a list of order items"""
         OrderItem.objects.create(
+            product_id=1,
             quantity=3,
             product_brand="LC",
             product_name="ghd",
@@ -59,6 +60,7 @@ class PrivateOrderItemApiTest(TestCase):
             weight_gram=300
         )
         OrderItem.objects.create(
+            product_id=2,
             quantity=2,
             product_brand="Polo",
             product_name="qwe",
@@ -114,6 +116,7 @@ class PrivateOrderItemApiTest(TestCase):
         # self.user.is_staff = False
 
         payload_order_item = {
+            "product_id": 1,
             "quantity": 2,
             "product_brand": "Polo",
             "product_name": "qwetest",
@@ -139,3 +142,10 @@ class PrivateOrderItemApiTest(TestCase):
         ).exists()
 
         self.assertTrue(exists)
+
+    def test_create_order_item_invalid(self):
+        """Test creating invalid orderitem"""
+        payload = {"product_name": ""}
+
+        res = self.client.post(ORDERITEM_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
