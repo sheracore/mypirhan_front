@@ -94,24 +94,24 @@ class PrivateOrderItemApiTest(TestCase):
         image_side_right = generate_photo_file(image_side_right_name)
         final_image = generate_photo_file(final_image_edited)
 
-        payload_product = {
-            "product_brand": "Polo",
-            "product_name": "qwe",
-            "product_description": "Good",
-            "size": "Mediom",
-            "price_irr": 200000,
-            "image_front": image_front,
-            "image_back": image_back,
-            "image_side_left": image_side_left,
-            "image_side_right": image_side_right,
-            "supplier": self.supplier.id,
-            "category": self.category.id
-        }
-        self.user.is_staff = True
+        # payload_product = {
+        #     "product_brand": "Polo",
+        #     "product_name": "qwe",
+        #     "product_description": "Good",
+        #     "size": "Mediom",
+        #     "price_irr": 200000,
+        #     "image_front": image_front,
+        #     "image_back": image_back,
+        #     "image_side_left": image_side_left,
+        #     "image_side_right": image_side_right,
+        #     "supplier": self.supplier.id,
+        #     "category": self.category.id
+        # }
+        # self.user.is_staff = True
 
-        res = self.client.post(PRODUCTS_URL, payload_product)
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.user.is_staff = False
+        # res = self.client.post(PRODUCTS_URL, payload_product)
+        # self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        # self.user.is_staff = False
 
         payload_order_item = {
             "quantity": 2,
