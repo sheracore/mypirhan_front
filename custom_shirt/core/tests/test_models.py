@@ -219,3 +219,22 @@ class ModelTest(TestCase):
         exp_path = f'uploads/product/{uuid}.jpg'
 
         self.assertEqual(file_path, exp_path)
+
+    def test_order_item(self):
+        """Create order item when a purches occured"""
+        product_name = "BillMir"
+        order_item = OrderItem.objects.create(
+            quantity=3,
+            product_brand="LC",
+            product_name=product_name,
+            product_description="Aaliiii",
+            # Its contain product price and orderitemappend price
+            price_irr=250000,  # Product price
+            # Total = quantity * price_irr + (total design append price)
+            total_price_irr=750000,
+            discount=4,
+            size="Mediom",
+            color="Yellow",
+            weight_gram=300
+        )
+        self.assertEqual(str(order_item), product_name)

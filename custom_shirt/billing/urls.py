@@ -11,6 +11,7 @@ router.register('shippers', views.ShipperViewSet)
 router.register('designappendcategory',
                 views.DesignAppendCategoryViewSet)
 router.register('designappend', views.DesignAppendViewSet)
+router.register('orderitem', views.OrderItemViewSet)
 
 app_name = 'billing'
 

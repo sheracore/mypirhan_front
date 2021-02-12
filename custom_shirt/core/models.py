@@ -29,7 +29,7 @@ def design_image_file_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
 
-    return os.path.join('uploads/design/', filename)
+    return os.path.join('uploads/final_product/', filename)
 
 
 class UserManager(BaseUserManager):
@@ -182,15 +182,25 @@ class OrderItem(models.Model):
     product_description = models.CharField(
         max_length=512, null=True)
     # Its contain product price and orderitemappend price
-    price_irr = models.IntegerField()
-    total_price_irr = models.IntegerField()  # Total = quantity * price_irr
+    price_irr = models.IntegerField()  # Product price
+    # Total = quantity * price_irr + (total design append price)
+    total_price_irr = models.IntegerField()
     discount = models.FloatField(default=0.0)
     size = models.CharField(max_length=64)
     color = models.CharField(max_length=64, default="No color")
     weight_gram = models.FloatField(null=True)
     product_image_front = models.ImageField(
         upload_to=design_image_file_path)
-    # final_image = models.ImageField(*************)
+    product_image_back = models.ImageField(
+        upload_to=design_image_file_path)
+    product_image_side_left = models.ImageField(
+        upload_to=design_image_file_path)
+    product_image_side_right = models.ImageField(
+        upload_to=design_image_file_path)
+    final_image = models.ImageField(upload_to=design_image_file_path)
+
+    def __str__(self):
+        return self.product_name
 
 
 class DesignAppend(models.Model):
