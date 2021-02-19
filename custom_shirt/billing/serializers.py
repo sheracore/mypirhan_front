@@ -46,5 +46,6 @@ class OrderSerializer(serializers.ModelSerializer):
     """Serializer for Order objectrs"""
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ("id", "create_order_datetime", "shipper_date", "paid_datetime", "paid", "deleted",
+                  "first_name", "last_name", "address1", "address2", "phone", "age", "city", "province", "postal_code", "country")
         read_only_fields = ('id',)

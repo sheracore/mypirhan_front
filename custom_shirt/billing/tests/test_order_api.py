@@ -36,7 +36,6 @@ class PrivateOrderApiTest(TestCase):
 
     def test_retrive_order_list(self):
         """test retrieving a list of orders"""
-        print(self.customer.id, self.customer.last_name)
         Order.objects.create(
             customer_id=self.customer.id,
             shipper_date=timezone.now(),
