@@ -12,6 +12,7 @@ router.register('designappendcategory',
                 views.DesignAppendCategoryViewSet)
 router.register('designappend', views.DesignAppendViewSet)
 router.register('orderitem', views.OrderItemViewSet)
+router.register('order', views.OrderViewSet)
 
 app_name = 'billing'
 

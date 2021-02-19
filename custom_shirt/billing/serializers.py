@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from core.models import (Shipper, DesignAppendCategory,
-                         DesignAppend, OrderItem)
+                         DesignAppend, OrderItem, Order)
 
 
 class ShipperSerializer(serializers.ModelSerializer):
@@ -40,3 +40,11 @@ class OrderItemSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
 
     # def create(self, validated_data):
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    """Serializer for Order objectrs"""
+    class Meta:
+        model = Order
+        fields = '__all__'
+        read_only_fields = ('id',)

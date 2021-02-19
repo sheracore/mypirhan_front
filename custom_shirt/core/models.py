@@ -3,9 +3,9 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
 # recommnded to retrieve setting from the django settings(custom_shit.setting)
 from django.conf import settings
+from django.utils import timezone
 
 
 def product_image_file_path(instance, filename):
@@ -214,3 +214,26 @@ class DesignAppend(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Order(models.Model):
+    """Order to save customers purchase"""
+    customer_id = models.IntegerField()
+    create_order_datetime = models.DateTimeField(default=timezone.now)
+    shipper_date = models.DateTimeField()
+    paid_datetime = models.DateTimeField(null=True)
+    paid = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=64)
+    last_name = models.CharField(max_length=64)
+    address1 = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255)
+    phone = models.CharField(max_length=11, unique=True)
+    age = models.IntegerField(null=True)
+    city = models.CharField(max_length=64, default='Tehran')
+    province = models.CharField(max_length=64, default='Tehran')
+    postal_code = models.CharField(max_length=32, null=True)
+    country = models.CharField(max_length=64, default='IRAN')
+
+    def __str__(self):
+        return self.first_name

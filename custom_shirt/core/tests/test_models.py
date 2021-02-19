@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from core.models import (
     Supplier,
@@ -13,7 +14,7 @@ from core.models import (
     DesignAppend,
     product_image_file_path,
     OrderItem,
-
+    Order,
 )
 
 
@@ -228,7 +229,7 @@ class ModelTest(TestCase):
             quantity=3,
             product_brand="LC",
             product_name=product_name,
-            product_description="Aaliiii",
+            product_description="Aalii",
             # Its contain product price and orderitemappend price
             price_irr=250000,  # Product price
             # Total = quantity * price_irr + (total design append price)
@@ -239,3 +240,19 @@ class ModelTest(TestCase):
             weight_gram=300
         )
         self.assertEqual(str(order_item), product_name)
+
+    def test_order(self):
+        """Create order when you want to create a basket of goods"""
+        first_name = "sheracore"
+        order = Order.objects.create(
+            customer_id=1,
+            shipper_date=timezone.now(),
+            paid_datetime=timezone.now(),
+            first_name=first_name,
+            last_name="simba",
+            address1="Tehran-haftetir",
+            address2="None",
+            phone="09187879251",
+            age=26
+        )
+        self.assertEqual(str(order), first_name)

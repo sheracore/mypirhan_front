@@ -4,12 +4,13 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from billing.serializers import (ShipperSerializer,
                                  DesignAppendCategorySerializer,
                                  DesignAppendSerializer,
-                                 OrderItemSerializer)
+                                 OrderItemSerializer,
+                                 OrderSerializer)
 from billing.permissions import (DesignAppendCategoryPermissions,
                                  DesignAppendPermissions)
 
 from core.models import (Shipper, DesignAppendCategory,
-                         DesignAppend, OrderItem)
+                         DesignAppend, OrderItem, Order)
 
 
 class ShipperViewSet(viewsets.GenericViewSet,
@@ -56,3 +57,20 @@ class OrderItemViewSet(viewsets.GenericViewSet,
     permission_classes = (IsAuthenticated,)
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+
+    # def get_queryset +++ In Progress
+
+
+class OrderViewSet(viewsets.GenericViewSet,
+                   mixins.CreateModelMixin,
+                   mixins.ListModelMixin):
+    """Manage Order in the database"""
+    permission_classes = (IsAuthenticated,)
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    # def get_queryset(self):
+    #     return self.queryset.filter(customer_id=self.request.user.id)
+
+    # def perform_create(self, serializer):
+    #     serializer.save(customer_id=self.request.user.id)
