@@ -128,11 +128,10 @@ class PrivateOrderItemApiTest(TestCase):
             "size": "Mediom",
             "color": "White",
             "weight_gram": 100,
-            "product_image_front": image_front,
-            "product_image_back": image_back,
-            "product_image_side_left": image_side_left,
-            "product_image_side_right": image_side_right,
-            "final_image": final_image,
+            "final_product_image_front": image_front,
+            "final_product_image_back": image_back,
+            "final_product_image_side_left": image_side_left,
+            "final_product_image_side_right": image_side_right,
         }
 
         res = self.client.post(ORDERITEM_URL, payload_order_item)

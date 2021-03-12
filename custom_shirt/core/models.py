@@ -190,15 +190,14 @@ class OrderItem(models.Model):
     size = models.CharField(max_length=64)
     color = models.CharField(max_length=64, default="No color")
     weight_gram = models.FloatField(null=True)
-    product_image_front = models.ImageField(
+    final_product_image_front = models.ImageField(
         upload_to=design_image_file_path)
-    product_image_back = models.ImageField(
+    final_product_image_back = models.ImageField(
         upload_to=design_image_file_path)
-    product_image_side_left = models.ImageField(
+    final_product_image_side_left = models.ImageField(
         upload_to=design_image_file_path)
-    product_image_side_right = models.ImageField(
+    final_product_image_side_right = models.ImageField(
         upload_to=design_image_file_path)
-    final_image = models.ImageField(upload_to=design_image_file_path)
 
     def __str__(self):
         return self.product_name
