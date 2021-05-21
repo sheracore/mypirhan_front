@@ -3,11 +3,13 @@ import io
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
 
 from rest_framework.test import APIClient
 from rest_framework import status
 
-from core.models import OrderItem, Supplier, Category
+from core.models import OrderItem, Supplier, Category, Order
 from billing.serializers import OrderItemSerializer
 
 from PIL import Image
@@ -36,6 +38,17 @@ class PrivateOrderItemApiTest(TestCase):
             "testpass"
         )
         self.client.force_authenticate(self.user)
+        self.order = Order.objects.create(
+            customer_id=1,
+            shipper_date=timezone.now(),
+            paid_datetime=timezone.now(),
+            first_name="sheracore",
+            last_name="simba",
+            address1="Tehran-haftetir",
+            address2="None",
+            phone="09187879251",
+            age=26
+        )
         # self.supplier = Supplier.objects.create(
         #     user=self.user,
         #     company_name='Pirhansara 16 xordad',
@@ -45,6 +58,7 @@ class PrivateOrderItemApiTest(TestCase):
     def test_retrieve_order_item_list(self):
         """test retrieving a list of order items"""
         OrderItem.objects.create(
+            order=self.order,
             product_id=1,
             quantity=3,
             product_brand="LC",
@@ -60,6 +74,7 @@ class PrivateOrderItemApiTest(TestCase):
             weight_gram=300
         )
         OrderItem.objects.create(
+            order=self.order,
             product_id=2,
             quantity=2,
             product_brand="Polo",
@@ -116,6 +131,7 @@ class PrivateOrderItemApiTest(TestCase):
         # self.user.is_staff = False
 
         payload_order_item = {
+            "order": self.order.id,
             "product_id": 1,
             "quantity": 2,
             "product_brand": "Polo",

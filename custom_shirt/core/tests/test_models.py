@@ -41,6 +41,21 @@ def sample_category():
     )
 
 
+def sample_order():
+    """Create a sample order"""
+    return Order.objects.create(
+        customer_id=1,
+        shipper_date=timezone.now(),
+        paid_datetime=timezone.now(),
+        first_name="sheracore",
+        last_name="simba",
+        address1="Tehran-haftetir",
+        address2="None",
+        phone="09187879251",
+        age=26
+    )
+
+
 # def sample_design():
 #     """Create sample design object"""
 #     return OrderItem.objects.create(
@@ -221,26 +236,6 @@ class ModelTest(TestCase):
 
         self.assertEqual(file_path, exp_path)
 
-    def test_order_item(self):
-        """Create order item when a purches occured"""
-        product_name = "BillMir"
-        order_item = OrderItem.objects.create(
-            product_id=1,
-            quantity=3,
-            product_brand="LC",
-            product_name=product_name,
-            product_description="Aalii",
-            # Its contain product price and orderitemappend price
-            price_irr=250000,  # Product price
-            # Total = quantity * price_irr + (total design append price)
-            total_price_irr=750000,
-            discount=4,
-            size="Mediom",
-            color="Yellow",
-            weight_gram=300
-        )
-        self.assertEqual(str(order_item), product_name)
-
     def test_order(self):
         """Create order when you want to create a basket of goods"""
         first_name = "sheracore"
@@ -256,3 +251,24 @@ class ModelTest(TestCase):
             age=26
         )
         self.assertEqual(str(order), first_name)
+
+    def test_order_item(self):
+        """Create order item when a purches occured"""
+        product_name = "BillMir"
+        order_item = OrderItem.objects.create(
+            order=sample_order(),
+            product_id=1,
+            quantity=3,
+            product_brand="LC",
+            product_name=product_name,
+            product_description="Aalii",
+            # Its contain product price and orderitemappend price
+            price_irr=250000,  # Product price
+            # Total = quantity * price_irr + (total design append price)
+            total_price_irr=750000,
+            discount=4,
+            size="Mediom",
+            color="Yellow",
+            weight_gram=300
+        )
+        self.assertEqual(str(order_item), product_name)

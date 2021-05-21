@@ -44,5 +44,6 @@ class CustomerSerializer(serializers.ModelSerializer):
             "province",
             "phone",
             "postal_code",
-            "country")
+            "country",
+            "gender")
         read_only_fields = ("id",)
