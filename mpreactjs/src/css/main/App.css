@@ -1,0 +1,383 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Georgia, serif;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ______________________ customer css _________________________________ */
+
+.container {
+  max-width: unset !important;
+  width: 100%;
+  padding: 0 !important;
+}
+
+.main-create-pic {
+  position: relative;
+}
+
+.main-create-pic-button {
+  /* box-shadow: 0 10px 10px 45px #f3ac3c; */
+  border: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  transition: width 1s, height 1s;
+  box-shadow: -1px 10px 18px rgb(44, 41, 41);
+}
+
+.main-create-pic-button:hover {
+  width: 104%;
+  height: 110%;
+}
+
+.create-pic {
+  width: 100%;
+  height: 100%;
+}
+
+.text-pic-create {
+  position: absolute;
+  left: 75%;
+  top: 50%;
+  font-size: 40px;
+}
+
+.main-shop-pic {
+  position: relative;
+  width: 100%;
+}
+
+.main-shop-pic-button {
+  /* box-shadow: 0 0 0 45px #f3ac3c; */
+  border: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  transition: width 1s, height 1s;
+  box-shadow: -1px 10px 18px rgb(44, 41, 41);
+}
+
+.main-shop-pic-button:hover {
+  width: 104%;
+  height: 110%;
+}
+
+.shop-pic {
+  width: 100%;
+  height: 100%;
+}
+
+.text-pic-shop {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  font-size: 40px;
+}
+
+/* _______________ Create CSS Editor ______________________ */
+
+.editor-wrapper {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor-col {
+  max-width: 33.33%;
+  flex: 0 0 33.33%;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+}
+@media screen and (max-width: 768px) {
+  .editor-col {
+    flex-wrap: wrap;
+    max-width: 100%;
+    flex: 0 0 100%;
+    flex-direction: row;
+  }
+}
+
+.editor-col-inside {
+  max-width: 50%;
+  flex: 0 0 50%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+@media screen and (max-width: 768px) {
+  .editor-col-inside {
+    max-width: 100%;
+    flex: 0 0 100%;
+    flex-direction: row;
+  }
+}
+
+.col-actions {
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-radius: 5%;
+}
+
+@media screen and (max-width: 768px) {
+  .col-actions {
+    width: 30%;
+    margin-bottom: 5px;
+  }
+}
+
+.product-l {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.product-r {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.product {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ____________________________________ dragable ________________*/
+
+.mydiv {
+  position: absolute;
+  z-index: 9;
+  border: 1px solid #d3d3d3;
+  text-align: center;
+  touch-action: pan-y;
+  /* padding-left: 100px; */
+  /* top: 100px; */
+  left: 110px;
+  /* right: 100px; */
+  /* bottom: 100px; */
+}
+
+.mydivheader {
+  width: inherit;
+  height: inherit;
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+}
+
+.design {
+  resize: both;
+  overflow: auto;
+  cursor: pointer;
+  margin: 0 5px;
+  text-align: center;
+  font-size: 14px;
+  /* width: 100%; */
+  max-width: 200px;
+  max-height: 200px;
+  /* max-width: 100%; */
+  /* min-width: 50px; */
+  /* padding: px; */
+  border-radius: 3px;
+  /* transition: all 0.2s ease-in-out; */
+}
+
+@media screen and (max-width: 768px) and (min-width: 482px) {
+  .design {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .design {
+    max-width: 130px;
+    max-height: 130px;
+  }
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1024px) {
+  .design {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media screen and (max-width: 2000px) and (min-width: 1500px) {
+  .design {
+    max-width: 250px;
+    max-height: 250px;
+  }
+}
+
+@media screen and (max-width: 2500px) and (min-width: 1881px) {
+  .design {
+    max-width: 300px;
+    max-height: 300px;
+  }
+}
+
+.design-img {
+  max-width: 200px;
+  max-height: 200px;
+  height: inherit;
+  width: inherit;
+}
+
+.design-text {
+  max-width: 200px;
+  max-height: 200px;
+  height: inherit;
+  width: inherit;
+}
+
+@media screen and (max-width: 768px) and (min-width: 482px) {
+  .design-img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  .design-img {
+    max-width: 130px;
+    max-height: 130px;
+  }
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1024px) {
+  .design-img {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media screen and (max-width: 1880px) and (min-width: 1500px) {
+  .design-img {
+    max-width: 250px;
+    max-height: 250px;
+  }
+}
+
+@media screen and (max-width: 2500px) and (min-width: 1881px) {
+  .design-img {
+    max-width: 300px;
+    max-height: 300px;
+  }
+}
+
+.design-delete-button {
+  position: relative;
+  margin-right: 100%;
+  margin-top: 10px;
+}
+
+/* ----------------------- Text Editor --------------------------- */
+
+.text-editor {
+  max-width: 100%;
+}
+
+.ck.ck-dropdown__panel {
+  max-height: 50vh;
+  max-height: var(--ck-editor-dropdown-max-height, 50vh);
+  overflow-y: auto;
+}
+
+/* Make sure the headings dropdown button does not change its size
+as different headings are selected. */
+.ck-editor .dropdown-toggle span {
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}
+
+/* Make the headings dropdown items visually distinctive. */
+.ck-editor .heading-item_heading1 {
+  font-size: 1.5em;
+}
+.ck-editor .heading-item_heading2 {
+  font-size: 1.3em;
+}
+.ck-editor .heading-item_heading3 {
+  font-size: 1.1em;
+}
+
+.ck-editor [class*="heading-item_"] {
+  line-height: 22px;
+  padding: 10px;
+}
+
+.ck-editor [class*="heading-item_heading"] {
+  font-weight: bold;
+}
+
+.ck-editor__editable {
+  max-height: 100px;
+}
+
+/* -------------------------------------- Modal --------------------------------- */
+
+.modal-desings {
+  margin: 5px;
+  background-color: #ffffff;
+  border-radius: 5%;
+  box-shadow: -1px 10px 20px rgb(255, 255, 255);
+}
+
+.modal-desings:hover {
+  box-shadow: -1px 10px 20px rgb(44, 41, 41);
+}
+
+.modal-desings-img {
+  width: 70px;
+  height: 70px;
+  transition: width 0.4s, height 0.4s;
+}
+
+.modal-desings-img:hover {
+  width: 72px;
+  height: 72px;
+}
+
+.modal-body {
+  max-height: 500px;
+  overflow-y: auto;
+}

@@ -1,0 +1,207 @@
+@font-face {
+  font-family: Marlboro;
+  src: url(../../fonts/Marlboro.ttf);
+}
+
+@font-face {
+  font-family: Abiland;
+  src: url(../../fonts/Abiland.ttf);
+}
+
+@font-face {
+  font-family: mrsmonsterblack;
+  src: url(../../fonts/mrsmonster.ttf);
+}
+
+@font-face {
+  font-family: mrsmonsterwhite;
+  src: url(../../fonts/mrsmonster3d.ttf);
+}
+
+@font-face {
+  font-family: bakery;
+  src: url(../../fonts/bakery.ttf);
+}
+
+@font-face {
+  font-family: Westhamp_Demo;
+  src: url(../../fonts/Westhamp_Demo.ttf);
+}
+
+@font-face {
+  font-family: Sherilla;
+  src: url(../../fonts/Sherilla.ttf);
+}
+
+@font-face {
+  font-family: MalitoFashion;
+  src: url(../../fonts/MalitoFashion.otf);
+}
+
+@font-face {
+  font-family: Blackout;
+  src: url(../../fonts/Blackout-Midnight.woff);
+}
+
+@font-face {
+  font-family: Debug;
+  src: url(../../fonts/DebugFreeTrial-MVdYB.otf);
+}
+
+@font-face {
+  font-family: AlotOfLove;
+  src: url(../../fonts/AlotOfLove-7Ra4.ttf);
+}
+
+@font-face {
+  font-family: BamsGlitchDemoRegular;
+  src: url(../../fonts/BamsGlitchDemoRegular-ByKV.ttf);
+}
+
+@font-face {
+  font-family: CalibrationGothicNbpLatin;
+  src: url(../../fonts/CalibrationGothicNbpLatin-rYmy.ttf);
+}
+
+@font-face {
+  font-family: CfGlitchCityRegular;
+  src: url(../../fonts/CfGlitchCityRegular-L1vZ.ttf);
+}
+
+@font-face {
+  font-family: DaughterOfAGlitch;
+  src: url(../../fonts/DaughterOfAGlitch-mMBv.ttf);
+}
+
+@font-face {
+  font-family: EctogasmRegular;
+  src: url(../../fonts/EctogasmRegular-pP5K.ttf);
+}
+
+@font-face {
+  font-family: ElectricShocker;
+  src: url(../../fonts/ElectricShocker-2y8d.ttf);
+}
+
+@font-face {
+  font-family: GlitchBold;
+  src: url(../../fonts/GlitchBold-DxO1.ttf);
+}
+
+@font-face {
+  font-family: GlitchInside;
+  src: url(../../fonts/GlitchInside-0Wjro.otf);
+}
+
+@font-face {
+  font-family: GlitchSmasherRegular;
+  src: url(../../fonts/GlitchSmasherRegular-Y7l8.otf);
+}
+
+@font-face {
+  font-family: MckGlitchRegular;
+  src: url(../../fonts/MckGlitchRegular-K99X.ttf);
+}
+
+@font-face {
+  font-family: Ninjos;
+  src: url(../../fonts/Ninjos-1wXj.ttf);
+}
+
+@font-face {
+  font-family: ParametricGlitchBold;
+  src: url(../../fonts/ParametricGlitchBold-YBLa.ttf);
+}
+
+@font-face {
+  font-family: RealYoung;
+  src: url(../../fonts/RealYoung-5Ljx.otf);
+}
+
+@font-face {
+  font-family: SonOfAGlitchItalic;
+  src: url(../../fonts/SonOfAGlitchItalic-KDlW.ttf);
+}
+
+@font-face {
+  font-family: TrinitarianRhapsody;
+  src: url(../../fonts/TrinitarianRhapsody-zWxl.ttf);
+}
+
+/* ------------------------------- Farsi Fonts ------------------------------------- */
+
+@font-face {
+  font-family: طلایی;
+  src: url(../../fonts/A.Goldan.ttf);
+}
+@font-face {
+  font-family: علی;
+  src: url(../../fonts/A_Ali.ttf);
+}
+@font-face {
+  font-family: فرزین;
+  src: url(../../fonts/AFarzian.ttf);
+}
+@font-face {
+  font-family: سرای;
+  src: url(../../fonts/A-Saray.ttf);
+}
+@font-face {
+  font-family: زنجیر;
+  src: url(../../fonts/zangar.ttf);
+}
+@font-face {
+  font-family: دارا-جادو;
+  src: url(../../fonts/dara-magic.ttf);
+}
+@font-face {
+  font-family: دارا-پیوسته;
+  src: url(../../fonts/dara-peyvastee.ttf);
+}
+@font-face {
+  font-family: دارا-زنجیر;
+  src: url(../../fonts/dara-zanjir.ttf);
+}
+@font-face {
+  font-family: نستعلیق;
+  src: url(../../fonts/IranNastaliq.ttf);
+}
+
+@font-face {
+  font-family: مکتب;
+  src: url(../../fonts/MaktabRita-Regular.woff2);
+}
+
+@font-face {
+  font-family: نیصبوری;
+  src: url(../../fonts/Mj_Nissabouri_0.ttf);
+}
+
+@font-face {
+  font-family: یگانه;
+  src: url(../../fonts/SI47ASH_Sole_B.ttf);
+}
+
+body {
+  margin: 0;
+  padding: 0 0 0 0;
+  /* font-size: 25px; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+p {
+  margin-top: 20px;
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.clickable {
+  cursor: pointer;
+}
