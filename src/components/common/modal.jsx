@@ -5,7 +5,7 @@ import ListGroup from "../common/listGroup"
 import { getCategoryDesigns } from "../../mock/mockCategoryDesigns"
 import SearchBox from "../searchBox"
 import _ from "lodash"
-import nike from "/home/mohamad/Desktop/myprojects/front_end/vidly/src/assets/nike.png"
+import nike from "/home/sheracore/Desktop/myprojects/mypirhan/mypirhan_front/src/assets/nike.png"
 import imageToBase64 from "image-to-base64/browser"
 
 class MyModal extends Component {

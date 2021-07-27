@@ -72,7 +72,7 @@ function dragElement(count, elmnt) {
       console.log(screenWidth)
       if ( screenWidth > 1880 ){
         console.log(" > 1880")
-        screenLimited(10, 400, 200, 360, pos2, pos1, elmnt)
+        screenLimited(10, 320, 180, 300, pos2, pos1, elmnt)
       }
       if (screenWidth >= 1500 && screenWidth <= 1880){
         console.log(" >= 1500")
