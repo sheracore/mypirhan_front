@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 import { getDesign } from "../../mock/mockDesigns";
-import free from "../../assets/free.png";
-import nike from "../../assets/nike.png";
+// import free from "../../assets/free.png";
+// import nike from "../../assets/nike.png";
 import drag from "../../services/dragable";
 import parse from "html-react-parser";
 

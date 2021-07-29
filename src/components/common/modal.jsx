@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import { Modal, Button } from "react-bootstrap"
-import Designs from "../../mock/mockDesigns"
-import ListGroup from "../common/listGroup"
-import { getCategoryDesigns } from "../../mock/mockCategoryDesigns"
-import SearchBox from "../searchBox"
-import _ from "lodash"
-import nike from "/home/sheracore/Desktop/myprojects/mypirhan/mypirhan_front/src/assets/nike.png"
-import imageToBase64 from "image-to-base64/browser"
+import React, { Component } from "react";
+import { Modal, Button } from "react-bootstrap";
+import Designs from "../../mock/mockDesigns";
+import ListGroup from "../common/listGroup";
+import { getCategoryDesigns } from "../../mock/mockCategoryDesigns";
+import SearchBox from "../searchBox";
+import _ from "lodash";
+import nike from "/home/sheracore/Desktop/myprojects/mypirhan/mypirhan_front/src/assets/nike.png";
+import imageToBase64 from "image-to-base64/browser";
 
 class MyModal extends Component {
   state = {
@@ -14,63 +14,55 @@ class MyModal extends Component {
     designs: [],
     selectedDesignsCategory: [],
     searchQuery: "",
-  }
+  };
 
   componentDidMount() {
-    const data = getCategoryDesigns()
-    const designsCategoty = [{ id: "", type_name: "All" }, ...data]
-    const designs = Designs
-    this.setState({ designs, designsCategoty })
+    const data = getCategoryDesigns();
+    const designsCategoty = [{ id: "", type_name: "All" }, ...data];
+    const designs = Designs;
+    this.setState({ designs, designsCategoty });
   }
 
   handleClose = () => {
-    this.props.onShow(false)
-  }
+    this.props.onShow(false);
+  };
 
   selectDesign = (key) => {
-    console.log(key)
-    this.props.onSelectedDesign(key)
-    this.handleClose()
-  }
+    console.log(key);
+    this.props.onSelectedDesign(key);
+    this.handleClose();
+  };
 
   handleDesignsCategorySelect = (category) => {
     this.setState({
       selectedDesignsCategory: category,
       searchQuery: "",
-    })
-  }
+    });
+  };
 
   handleSearch = (query) => {
-    this.setState({ searchQuery: query, selectedDesignsCategory: null })
-  }
+    this.setState({ searchQuery: query, selectedDesignsCategory: null });
+  };
 
   getPagedData = () => {
     const {
       selectedDesignsCategory,
       searchQuery,
       designs: allDesigns,
-    } = this.state
+    } = this.state;
 
-    console.log(allDesigns, "&&&&&&&&&&&&&&&&&&&")
-
-    let filtered = allDesigns
+    let filtered = allDesigns;
     if (searchQuery)
       filtered = allDesigns.filter((d) =>
         d.name.toLowerCase().startsWith(searchQuery.toLowerCase())
-      )
+      );
     else if (selectedDesignsCategory && selectedDesignsCategory.id)
       filtered = allDesigns.filter(
         (d) => d.design_append_category.id === selectedDesignsCategory.id
-      )
+      );
 
-    console.log(filtered, "***********")
-
-    // const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
-
-    // const movies = paginate(sorted, currentPage, pageSize)
-
-    return { totalCount: filtered.length, data: filtered }
-  }
+    return { totalCount: filtered.length, data: filtered };
+  };
 
   // convertToBase64 = (path) => {
   //   let imgBase64 = "";
@@ -87,11 +79,11 @@ class MyModal extends Component {
   // };
 
   render() {
-    const { show } = this.props
-    const { searchQuery } = this.state
+    const { show } = this.props;
+    const { searchQuery } = this.state;
     // console.log("In modal render", selectedDesignsCategory)
 
-    const { totalCount, data: designs } = this.getPagedData()
+    const { totalCount, data: designs } = this.getPagedData();
 
     return (
       <>
@@ -144,8 +136,8 @@ class MyModal extends Component {
           </Modal.Footer>
         </Modal>
       </>
-    )
+    );
   }
 }
 
-export default MyModal
+export default MyModal;

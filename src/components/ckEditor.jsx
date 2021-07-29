@@ -4,7 +4,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import Dragable from "./common/dragableBox";
 
-import parse from "html-react-parser";
+// import parse from "html-react-parser";
 
 const editorConfiguration = {
   fontFamily: {

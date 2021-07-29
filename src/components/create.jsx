@@ -1,12 +1,12 @@
-import React, { Component, useState } from "react"
+import React, { Component, useState } from "react";
 
-import { Modal, Button } from "react-bootstrap"
-import Ckeditor from "./ckEditor"
-
-import Designs from "../mock/mockDesigns"
-import Dragable from "./common/dragableBox"
-import tshirt from "../assets/tshirt2.png"
-import MyModal from "./common/modal"
+import { Modal, Button } from "react-bootstrap";
+import Ckeditor from "./ckEditor";
+import Upload from "./common/uploadImage";
+// import Designs from "../mock/mockDesigns"
+import Dragable from "./common/dragableBox";
+import tshirt from "../assets/tshirt2.png";
+import MyModal from "./common/modal";
 
 class Create extends Component {
   state = {
@@ -15,14 +15,15 @@ class Create extends Component {
     // This key should given by design id from backend
     key: 1,
     textFlag: 0,
+    uploadFlag: 0,
     show: false,
-  }
+  };
 
   addDesign = (selectedKey) => {
     // Create an empty array that will hold the final JSX output.
-    const { key } = this.state
-    this.setState({ key: key + 1 })
-    const { dragElement } = this.state
+    const { key } = this.state;
+    this.setState({ key: key + 1 });
+    const { dragElement } = this.state;
 
     dragElement.push(
       <Dragable
@@ -31,37 +32,50 @@ class Create extends Component {
         selectedDesignKey={selectedKey}
         onDelete={this.deleteDragableBox}
       />
-    )
-    this.setState(dragElement)
-  }
+    );
+    this.setState(dragElement);
+  };
 
   buttonTextOnChange = () => {
-    const { textFlag } = this.state
-    this.setState({ textFlag: !textFlag })
+    const { textFlag } = this.state;
+    this.setState({ textFlag: !textFlag });
     // console.log(this.state.textFlag);
-  }
+  };
+
+  buttonUploadOnChange = () => {
+    const { uploadFlag } = this.state;
+    this.setState({ uploadFlag: !uploadFlag });
+    // console.log(this.state.textFlag);
+  };
 
   handleTextDragElement = (dragableElement, key) => {
     // console.log("ckEditor key ", key);
-    this.setState({ key: key + 1 })
-    let { dragElement } = this.state
-    this.setState({ dragElement: [...dragElement, dragableElement] })
-  }
+    this.setState({ key: key + 1 });
+    let { dragElement } = this.state;
+    this.setState({ dragElement: [...dragElement, dragableElement] });
+  };
 
-  handleShow = () => this.setState({ show: true })
-  onShowChange = (value) => this.setState({ show: value })
-  selectedDesign = (key) => this.addDesign(key)
+  handleUploadDragElement = (dragableElement, key) => {
+    // console.log("ckEditor key ", key);
+    this.setState({ key: key + 1 });
+    let { dragElement } = this.state;
+    this.setState({ dragElement: [...dragElement, dragableElement] });
+  };
+
+  handleShow = () => this.setState({ show: true });
+  onShowChange = (value) => this.setState({ show: value });
+  selectedDesign = (key) => this.addDesign(key);
 
   deleteDragableBox = (key) => {
     const dragElement = this.state.dragElement.filter(
       (elem) => !(elem.key == key)
-    )
-    console.log("newDragElement ", dragElement)
-    this.setState({ dragElement })
-  }
+    );
+    console.log("newDragElement ", dragElement);
+    this.setState({ dragElement });
+  };
 
   render() {
-    const { textFlag, show, dragElement } = this.state
+    const { textFlag, uploadFlag, show, dragElement } = this.state;
     return (
       <>
         <div className="editor-wrapper">
@@ -71,10 +85,17 @@ class Create extends Component {
             </div>
             <div className="editor-col-inside">
               <button className="col-actions">محصولات</button>
-              <button className="col-actions">آپلود</button>
-              <button onClick={() => this.addDesign()} className="col-actions">
-                طرح
+              <button
+                onClick={this.buttonUploadOnChange}
+                className="col-actions"
+              >
+                آپلود
               </button>
+              {uploadFlag ? (
+                <Upload onChange={this.handleUploadDragElement} />
+              ) : (
+                ""
+              )}
               <Button variant="primary" onClick={this.handleShow}>
                 طرح
               </Button>
@@ -108,8 +129,8 @@ class Create extends Component {
           </div>
         </div>
       </>
-    )
+    );
   }
 }
 
-export default Create
+export default Create;
