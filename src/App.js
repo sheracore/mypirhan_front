@@ -12,6 +12,7 @@ import NavBar from './components/navBar'
 import Logout from './components/logout';
 import Create from './components/create';
 import ProtectedRoute from './components/common/protectedRoute';
+import AdminDashboard from './components/adminDashboard';
 import auth from './services/authService'
 import 'react-toastify/dist/ReactToastify.css'
 import './css/main/App.css';
@@ -43,8 +44,9 @@ class App extends Component {
         <Route path="/customers" component={Customers} />
         <Route path="/rental" component={Rentals} />
         <Route path="/create" component={Create} />
+        <Route path="/admin-dashboard" component={AdminDashboard} />
         <Route path="/not-found" component={NotFound} />
-        <Redirect from="/" exact to="/movies" />
+        <Redirect from="/" exact to="/customers" />
         <Redirect to="/not-found" />
       </Switch>
     </main>

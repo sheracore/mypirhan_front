@@ -14,7 +14,7 @@ describe('auth middleware', () => {
   const exec = () => {
     return request(server)
       .post('/api/genres')
-      .set('x-auth-token', token)
+      .set('Authorization', token)
       .send({ name: 'genre1' });
   }
 

@@ -1,8 +1,19 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import Designs from "../../mock/mockDesigns";
 import ListGroup from "../common/listGroup";
-import { getCategoryDesigns } from "../../mock/mockCategoryDesigns";
+import {
+  getDesigns,
+  getDesign,
+  deleteDesign,
+  saveDesign,
+  apiEndpoint
+} from "../../services/designService";
+import {
+  getDesignCategories,
+  deleteDesignCategory,
+} from "../../services/designCategoryService";
+// import Designs from "../../mock/mockDesigns";
+// import { getCategoryDesigns } from "../../mock/mockCategoryDesigns";
 import SearchBox from "../searchBox";
 import _ from "lodash";
 import nike from "/home/sheracore/Desktop/myprojects/mypirhan/mypirhan_front/src/assets/nike.png";
@@ -16,11 +27,12 @@ class MyModal extends Component {
     searchQuery: "",
   };
 
-  componentDidMount() {
-    const data = getCategoryDesigns();
+  async componentDidMount() {
+    const { data } = await getDesignCategories();
     const designsCategoty = [{ id: "", type_name: "All" }, ...data];
-    const designs = Designs;
+    const { data: designs } = await getDesigns();
     this.setState({ designs, designsCategoty });
+
   }
 
   handleClose = () => {

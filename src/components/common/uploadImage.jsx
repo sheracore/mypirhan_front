@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { apiEndpoint } from "../../services/designUploadService";
 
 class Upload extends Component {
   state = {
@@ -18,11 +19,10 @@ class Upload extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
     let form_data = new FormData();
     form_data.append("image", this.state.image, this.state.image.name);
-    console.log("Here", this.state.image);
-    let url = "http://localhost:8000/api/billing/designupload/";
+    console.log("Here form_data", form_data);
+    let url = apiEndpoint;
     axios
       .post(url, form_data, {
         headers: {
@@ -38,6 +38,7 @@ class Upload extends Component {
       })
       .then((res) => {
         console.log(res.data);
+        this.props.imageUrl(res.data.image)
       })
       .catch((err) => console.log(err));
   };
@@ -57,7 +58,6 @@ class Upload extends Component {
 
   render() {
     const image = this.state;
-    console.log("*******");
     return (
       <div className="App">
         {/* <form onSubmit={this.handleSubmit}> */}

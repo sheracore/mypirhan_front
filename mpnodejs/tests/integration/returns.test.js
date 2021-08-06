@@ -16,7 +16,7 @@ describe('/api/returns', () => {
   const exec = () => {
     return request(server)
       .post('/api/returns')
-      .set('x-auth-token', token)
+      .set('Authorization', token)
       .send({ customerId, movieId });
   };
   

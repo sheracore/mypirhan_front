@@ -66,7 +66,7 @@ describe('/api/genres', () => {
     const exec = async () => {
       return await request(server)
         .post('/api/genres')
-        .set('x-auth-token', token)
+        .set('xAuthorization', token)
         .send({ name });
     }
 
@@ -124,7 +124,7 @@ describe('/api/genres', () => {
     const exec = async () => {
       return await request(server)
         .put('/api/genres/' + id)
-        .set('x-auth-token', token)
+        .set('Authorization', token)
         .send({ name: newName });
     }
 
@@ -203,7 +203,7 @@ describe('/api/genres', () => {
     const exec = async () => {
       return await request(server)
         .delete('/api/genres/' + id)
-        .set('x-auth-token', token)
+        .set('Authorization', token)
         .send();
     }
 

@@ -11,7 +11,8 @@ const NavBar = ({ user }) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
-                <NavLink className="nav-link" aria-current="page" to="/movies">فیلم ها</NavLink>
+                <NavLink className="nav-link" to="/admin-dashboard">داشبورد مدیریت</NavLink>
+                {/* <NavLink className="nav-link" aria-current="page" to="/movies">فیلم ها</NavLink> */}
                 <NavLink className="nav-link" to="/customers">خانه</NavLink>
                 <NavLink className="nav-link" to="/rental">سبد خرید</NavLink>
                 {!user && 

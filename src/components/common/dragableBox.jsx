@@ -1,7 +1,6 @@
-// import React, { Component } from "react";
-import { getDesign } from "../../mock/mockDesigns";
-// import free from "../../assets/free.png";
-// import nike from "../../assets/nike.png";
+import React, { Component } from "react";
+// import { getDesign } from "../../mock/mockDesigns";
+import { getDesign } from "../../services/designService";
 import drag from "../../services/dragable";
 import parse from "html-react-parser";
 
@@ -10,19 +9,24 @@ class Dragable extends Component {
     textFlag: false,
     text: "",
     design: "",
+    imageUploadUrl: null,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     drag("mydiv");
     if ("selectedDesignKey" in this.props) {
       const { selectedDesignKey } = this.props;
-      const { image: design } = getDesign(selectedDesignKey);
-      this.setState({ design });
+      const { data } = await getDesign(selectedDesignKey);
+      this.setState({ design: data.image });
     }
     if ("text" in this.props) {
       const { text } = this.props;
       this.setState({ text });
       this.setState({ textFlag: true });
+    }
+    if ("imageUploadUrl" in this.props) {
+      const { imageUploadUrl: design } = this.props;
+      this.setState({ design });
     }
   }
 
@@ -30,8 +34,6 @@ class Dragable extends Component {
     const { dataKey } = this.props;
     this.props.onDelete(dataKey);
   };
-
-  retu;
 
   render() {
     const { textFlag, text, design } = this.state;

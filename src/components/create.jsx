@@ -13,7 +13,7 @@ class Create extends Component {
     textData: "test",
     dragElement: [],
     // This key should given by design id from backend
-    key: 1,
+    key: 0,
     textFlag: 0,
     uploadFlag: 0,
     show: false,
@@ -21,9 +21,10 @@ class Create extends Component {
 
   addDesign = (selectedKey) => {
     // Create an empty array that will hold the final JSX output.
-    const { key } = this.state;
+    const { key, dragElement } = this.state;
     this.setState({ key: key + 1 });
-    const { dragElement } = this.state;
+
+    console.log("****************",key)
 
     dragElement.push(
       <Dragable
@@ -55,12 +56,29 @@ class Create extends Component {
     this.setState({ dragElement: [...dragElement, dragableElement] });
   };
 
-  handleUploadDragElement = (dragableElement, key) => {
-    // console.log("ckEditor key ", key);
+  // handleUploadDragElement = (dragableElement, key) => {
+  //   // console.log("ckEditor key ", key);
+  //   this.setState({ key: key + 1 });
+  //   let { dragElement } = this.state;
+  //   this.setState({ dragElement: [...dragElement, dragableElement] });
+  // };
+  hanleUploadImage = (imgUrl) => {
+    const { key, dragElement } = this.state;
     this.setState({ key: key + 1 });
-    let { dragElement } = this.state;
-    this.setState({ dragElement: [...dragElement, dragableElement] });
-  };
+
+    console.log("****************",key)
+
+    dragElement.push(
+      <Dragable
+        key={key}
+        dataKey={key}
+        imageUploadUrl={imgUrl}
+        onDelete={this.deleteDragableBox}
+      />
+    );
+    this.setState(dragElement);
+
+  }
 
   handleShow = () => this.setState({ show: true });
   onShowChange = (value) => this.setState({ show: value });
@@ -92,7 +110,7 @@ class Create extends Component {
                 آپلود
               </button>
               {uploadFlag ? (
-                <Upload onChange={this.handleUploadDragElement} />
+                <Upload onChange={this.handleUploadDragElement} imageUrl={this.hanleUploadImage}/>
               ) : (
                 ""
               )}

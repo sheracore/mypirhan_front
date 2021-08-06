@@ -381,3 +381,41 @@ as different headings are selected. */
   max-height: 500px;
   overflow-y: auto;
 }
+
+/* _______________________________ admin dashboard ------------------ */
+
+.admin-dashboard-wapper {
+  width: 97%;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-style: solid;
+  border-width: 2px;
+  max-height: 500px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.dashboard-desings-img {
+  width: 450px;
+  height: 450px;
+}
+
+.admin-dashboard-header {
+  padding-left: 48%;
+  font-family: "زنجیر";
+  font-size: 30px;
+}
+
+.dashboard-add-btn {
+  margin-left: 30px;
+  margin-right: 30px;
+  background-color: #a3bd8b;
+  font-family: "زنجیر";
+  font-size: 20px;
+  width: 97%;
+}
+
+.dashboart-select {
+  overflow: scroll;
+  height: 20px;
+}
