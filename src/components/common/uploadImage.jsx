@@ -23,22 +23,20 @@ class Upload extends Component {
     form_data.append("image", this.state.image, this.state.image.name);
     console.log("Here form_data", form_data);
     let url = apiEndpoint;
+    const config = {
+      onUploadProgress: (progressEvent) => {
+        console.log(
+          "Upload Progress" +
+            Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+            "%"
+        );
+      },
+    };
     axios
-      .post(url, form_data, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-        onUploadProgress: (progressEvent) => {
-          console.log(
-            "Upload Progress" +
-              Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-              "%"
-          );
-        },
-      })
+      .post(url, form_data, config)
       .then((res) => {
         console.log(res.data);
-        this.props.imageUrl(res.data.image)
+        this.props.imageUrl(res.data.image);
       })
       .catch((err) => console.log(err));
   };

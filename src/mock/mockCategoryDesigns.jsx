@@ -5,7 +5,7 @@ const categoryDesign = [
   },
   {
     id: 2,
-    type_name: "Special",
+    type_name: "special",
   },
   {
     id: 3,
