@@ -18,7 +18,7 @@ import {
   getDesignCategories,
   deleteDesignCategory,
 } from "../services/designCategoryService";
-import create from "../services/apiService";
+import { create, getAll } from "../services/apiService";
 import Designs from "../mock/mockDesigns";
 import { getCategoryDesigns } from "../mock/mockCategoryDesigns";
 import axios from "axios";
@@ -54,10 +54,12 @@ class ProductForm extends Form {
   };
 
   async componentDidMount() {
-    const { data } = await getDesignCategories();
-    const designsCategoty = [{ id: "", type_name: "All" }, ...data];
-    const { data: designs } = await getDesigns();
-    this.setState({ designs, designsCategoty });
+    getAll("/billing/designappendcategory/")
+      .then((res) => {
+        const designsCategoty = [{ id: "", type_name: "All" }, ...res.data];
+        this.setState({ designsCategoty });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleImageChange = (e) => {
@@ -89,7 +91,8 @@ class ProductForm extends Form {
     this.setState({ data });
   };
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
+    console.log("Befor api service...");
     let form_data = new FormData();
     const { data } = this.state;
     form_data.append("image", data.image);
@@ -98,12 +101,13 @@ class ProductForm extends Form {
     form_data.append("name", data.name);
     console.log("Here", form_data);
     // await saveDesign(data);
-
     // *******************************************************
     const header = { "content-type": "multipart/form-data" };
     create("/billing/designappend/", form_data, {}, header)
       .then((res) => {
-        if (res) console.log(res);
+        if (res) {
+          console.log(res);
+        }
       })
       .catch((err) => console.log(err));
     // *******************************************************

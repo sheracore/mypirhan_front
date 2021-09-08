@@ -18,7 +18,7 @@ import {
   getDesignCategories,
   deleteDesignCategory,
 } from "../services/designCategoryService";
-import create from "../services/apiService";
+import { create, getAll } from "../services/apiService";
 import Designs from "../mock/mockDesigns";
 import { getCategoryDesigns } from "../mock/mockCategoryDesigns";
 import axios from "axios";
@@ -33,10 +33,9 @@ class ProductForm extends Form {
       design_append_category: null,
     },
     errors: {},
-    designsCategoty: [],
-    designs: [],
+    suppliers: [],
+    categories: [],
     searchQuery: "",
-    selectedDesignsCategory: [],
     showPicture: false,
     showUpload: false,
     selectedImage: null,
@@ -54,10 +53,19 @@ class ProductForm extends Form {
   };
 
   async componentDidMount() {
-    const { data } = await getDesignCategories();
-    const designsCategoty = [{ id: "", type_name: "All" }, ...data];
-    const { data: designs } = await getDesigns();
-    this.setState({ designs, designsCategoty });
+    getAll("/product/suppliers/")
+      .then(({ data }) => {
+        const suppliers = [{ id: "", type_name: "All" }, ...data];
+        this.setState({ suppliers });
+      })
+      .catch((err) => console.log(err));
+
+    getAll("/product/categories/")
+      .then(({ data }) => {
+        const categories = [{ id: "", type_name: "All" }, ...data];
+        this.setState({ categories });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleImageChange = (e) => {
@@ -97,11 +105,7 @@ class ProductForm extends Form {
     form_data.append("design_append_price_irr", data.design_append_price_irr);
     form_data.append("name", data.name);
     console.log("Here", form_data);
-
     console.log(data);
-    // **********************************************
-    // create();
-    // **********************************************
 
     axios
       .post(apiEndpoint, form_data, {
@@ -126,22 +130,37 @@ class ProductForm extends Form {
   };
 
   render() {
-    const { designsCategoty } = this.state;
+    const { suppliers, categories } = this.state;
+    console.log(suppliers);
 
     return (
       <>
+        <p>تامین کننده</p>
+        <select
+          className="dashboart-select"
+          value={this.state.selectedCategory}
+          onChange={this.handleSelectChange}
+        >
+          {suppliers.map((supplier) => (
+            <option key={supplier.id} value={supplier.id}>
+              {supplier.company_name}
+            </option>
+          ))}
+        </select>
+
         <p>دسته بندی</p>
         <select
           className="dashboart-select"
           value={this.state.selectedCategory}
           onChange={this.handleSelectChange}
         >
-          {designsCategoty.map((category) => (
+          {categories.map((category) => (
             <option key={category.id} value={category.id}>
-              {category.type_name}
+              {category.category_type}
             </option>
           ))}
         </select>
+
         <form>
           {this.renderInput("name", "نام طرح")}
           {this.renderInput("design_append_price_irr", "قیمت طرح (ریال)")}
