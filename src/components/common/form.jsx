@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import CheckBox from "./checkBox";
 
 class Form extends Component {
   state = {
     data: {},
-    errors: {}
+    errors: {},
   };
 
   validate = () => {
@@ -26,7 +27,7 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
@@ -48,11 +49,33 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
+  handleCheckBoxChange = (e, name) =>
+    this.setState({ [name]: e.target.checked });
+
   renderButton(label) {
     return (
       <button disabled={this.validate()} className="btn btn-primary">
         {label}
       </button>
+    );
+  }
+
+  renderImgUploadButton(name) {
+    const { data, errors } = this.state;
+    return (
+      <>
+        <label htmlFor="image" className="btn">
+          Select {name}
+        </label>
+        <Input
+          style={{ disply: "none" }}
+          type="file"
+          id="image"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={(e) => this.handleImageChange(e, name)}
+          required
+        />
+      </>
     );
   }
 
@@ -71,9 +94,21 @@ class Form extends Component {
     );
   }
 
+  renderCheckBox(name, label) {
+    const { data, errors } = this.state;
+    return (
+      <CheckBox
+        name={name}
+        // value=""
+        label={label}
+        onChange={(e) => this.handleCheckBoxChange(e, name)}
+        error={errors[name]}
+      />
+    );
+  }
+
   renderInput(name, label, type = "text") {
     const { data, errors } = this.state;
-
     return (
       <Input
         type={type}

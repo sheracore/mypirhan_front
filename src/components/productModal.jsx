@@ -1,30 +1,28 @@
 import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
-import ListGroup from "../common/listGroup";
-import { getAll } from "../../services/apiService";
-// import Designs from "../../mock/mockDesigns";
-// import { getCategoryDesigns } from "../../mock/mockCategoryDesigns";
-import SearchBox from "../searchBox";
+import ListGroup from "./common/listGroup";
+import { getAll } from "../services/apiService";
+import SearchBox from "./searchBox";
 import _ from "lodash";
 
-class DesignModal extends Component {
+class ProductModal extends Component {
   state = {
-    designsCategoty: [],
-    designs: [],
-    selectedDesignsCategory: [],
+    productCategories: [],
+    products: [],
+    selectedProductsCategory: [],
     searchQuery: "",
   };
 
-  async componentDidMount() {
-    getAll("/billing/designappendcategory/")
+  componentDidMount() {
+    getAll("/product/categories/")
       .then(({ data }) => {
-        const designsCategoty = [{ id: "", type_name: "All" }, ...data];
-        this.setState({ designsCategoty });
+        const productCategories = [{ id: "", category_type: "All" }, ...data];
+        this.setState({ productCategories });
       })
       .catch((err) => console.log(err));
-    getAll("/billing/designappend/")
-      .then(({ data: designs }) => {
-        this.setState({ designs });
+    getAll("/product/products/")
+      .then(({ data: products }) => {
+        this.setState({ products });
       })
       .catch((err) => console.log(err));
   }
@@ -33,38 +31,37 @@ class DesignModal extends Component {
     this.props.onShow(false);
   };
 
-  selectDesign = (key) => {
-    console.log(key);
-    this.props.onSelectedDesign(key);
+  selectProduct = (key) => {
+    this.props.onSelectedProduct(key);
     this.handleClose();
   };
 
-  handleDesignsCategorySelect = (category) => {
+  handleProductsCategorySelect = (product) => {
     this.setState({
-      selectedDesignsCategory: category,
+      selectedProductsCategory: product,
       searchQuery: "",
     });
   };
 
   handleSearch = (query) => {
-    this.setState({ searchQuery: query, selectedDesignsCategory: null });
+    this.setState({ searchQuery: query, selectedProductsCategory: null });
   };
 
   getPagedData = () => {
     const {
-      selectedDesignsCategory,
+      selectedProductsCategory,
       searchQuery,
-      designs: allDesigns,
+      products: allProducts,
     } = this.state;
 
-    let filtered = allDesigns;
+    let filtered = allProducts;
     if (searchQuery)
-      filtered = allDesigns.filter((d) =>
-        d.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      filtered = allProducts.filter((p) =>
+        p.product_name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
-    else if (selectedDesignsCategory && selectedDesignsCategory.id)
-      filtered = allDesigns.filter(
-        (d) => d.design_append_category.id === selectedDesignsCategory.id
+    else if (selectedProductsCategory && selectedProductsCategory.id)
+      filtered = allProducts.filter(
+        (p) => p.category.id === selectedProductsCategory.id
       );
 
     return { totalCount: filtered.length, data: filtered };
@@ -72,10 +69,11 @@ class DesignModal extends Component {
 
   render() {
     const { show } = this.props;
-    const { searchQuery } = this.state;
-    // console.log("In modal render", selectedDesignsCategory)
+    const { searchQuery, productCategories, selectedProductsCategory } =
+      this.state;
+    // console.log("In modal render", productCategories);
 
-    const { totalCount, data: designs } = this.getPagedData();
+    const { totalCount, data: products } = this.getPagedData();
 
     return (
       <>
@@ -88,25 +86,25 @@ class DesignModal extends Component {
               <div className="col-sm-4">
                 <div>
                   <ListGroup
-                    items={this.state.designsCategoty}
-                    onItemSelect={this.handleDesignsCategorySelect}
-                    selectedItem={this.state.selectedDesignsCategory}
-                    textProperty="type_name"
+                    items={productCategories}
+                    onItemSelect={this.handleProductsCategorySelect}
+                    selectedItem={selectedProductsCategory}
+                    textProperty="category_type"
                   />
                 </div>
               </div>
               <div className="col-sm-8">
                 <SearchBox value={searchQuery} onChange={this.handleSearch} />
                 <div>
-                  {designs.map((design) => (
+                  {products.map((product) => (
                     <button
-                      key={design.id}
+                      key={product.id}
                       className="modal-desings"
-                      onClick={() => this.selectDesign(design.id)}
+                      onClick={() => this.selectProduct(product.id)}
                     >
                       <img
                         className="modal-desings-img"
-                        src={design.image}
+                        src={product.image_front}
                         alt="modal-designs-pic"
                       />
                     </button>
@@ -129,4 +127,4 @@ class DesignModal extends Component {
   }
 }
 
-export default DesignModal;
+export default ProductModal;

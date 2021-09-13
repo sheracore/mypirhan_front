@@ -6,7 +6,9 @@ import Upload from "./common/uploadImage";
 // import Designs from "../mock/mockDesigns"
 import Dragable from "./common/dragableBox";
 import tshirt from "../assets/tshirt2.png";
-import MyModal from "./common/modal";
+import DesignModal from "./common/modal";
+import ProductModal from "./productModal";
+import { getById } from "../services/apiService";
 
 class Create extends Component {
   state = {
@@ -16,7 +18,9 @@ class Create extends Component {
     key: 0,
     textFlag: 0,
     uploadFlag: 0,
-    show: false,
+    showDesign: false,
+    showProduct: false,
+    productImage: tshirt,
   };
 
   addDesign = (selectedKey) => {
@@ -24,7 +28,7 @@ class Create extends Component {
     const { key, dragElement } = this.state;
     this.setState({ key: key + 1 });
 
-    console.log("****************",key)
+    console.log("****************", key);
 
     dragElement.push(
       <Dragable
@@ -35,6 +39,31 @@ class Create extends Component {
       />
     );
     this.setState(dragElement);
+  };
+
+  addProduct = (selectedKey) => {
+    // Create an empty array that will hold the final JSX output.
+    // const { key, dragElement } = this.state;
+    // this.setState({ key: key + 1 });
+
+    getById("/product/products/", selectedKey)
+      .then(({ data }) => {
+        console.log(data);
+        const productImage = data.image_front;
+        this.setState({ productImage });
+      })
+      .catch((err) => console.log(err));
+    console.log("****************", selectedKey);
+
+    // dragElement.push(
+    //   <Dragable
+    //     key={this.state.key}
+    //     dataKey={this.state.key}
+    //     selectedDesignKey={selectedKey}
+    //     onDelete={this.deleteDragableBox}
+    //   />
+    // );
+    // this.setState(dragElement);
   };
 
   buttonTextOnChange = () => {
@@ -66,7 +95,7 @@ class Create extends Component {
     const { key, dragElement } = this.state;
     this.setState({ key: key + 1 });
 
-    console.log("****************",key)
+    console.log("****************", key);
 
     dragElement.push(
       <Dragable
@@ -77,12 +106,14 @@ class Create extends Component {
       />
     );
     this.setState(dragElement);
+  };
 
-  }
-
-  handleShow = () => this.setState({ show: true });
-  onShowChange = (value) => this.setState({ show: value });
+  handleShowDesign = () => this.setState({ showDesign: true });
+  onShowDesignChange = (value) => this.setState({ showDesign: value });
+  handleShowProduct = () => this.setState({ showProduct: true });
+  onShowProductChange = (value) => this.setState({ showProduct: value });
   selectedDesign = (key) => this.addDesign(key);
+  selectedProduct = (key) => this.addProduct(key);
 
   deleteDragableBox = (key) => {
     const dragElement = this.state.dragElement.filter(
@@ -93,7 +124,14 @@ class Create extends Component {
   };
 
   render() {
-    const { textFlag, uploadFlag, show, dragElement } = this.state;
+    const {
+      textFlag,
+      uploadFlag,
+      showDesign,
+      showProduct,
+      dragElement,
+      productImage,
+    } = this.state;
     return (
       <>
         <div className="editor-wrapper">
@@ -102,7 +140,9 @@ class Create extends Component {
               <div className="testdiv"> Here first editor-col-inside</div>
             </div>
             <div className="editor-col-inside">
-              <button className="col-actions">محصولات</button>
+              <button className="col-actions" onClick={this.handleShowProduct}>
+                محصولات
+              </button>
               <button
                 onClick={this.buttonUploadOnChange}
                 className="col-actions"
@@ -110,17 +150,25 @@ class Create extends Component {
                 آپلود
               </button>
               {uploadFlag ? (
-                <Upload onChange={this.handleUploadDragElement} imageUrl={this.hanleUploadImage}/>
+                <Upload
+                  onChange={this.handleUploadDragElement}
+                  imageUrl={this.hanleUploadImage}
+                />
               ) : (
                 ""
               )}
-              <Button variant="primary" onClick={this.handleShow}>
+              <button className="col-actions" onClick={this.handleShowDesign}>
                 طرح
-              </Button>
+              </button>
 
-              <MyModal
-                show={show}
-                onShow={this.onShowChange}
+              <ProductModal
+                show={showProduct}
+                onShow={this.onShowProductChange}
+                onSelectedProduct={this.selectedProduct}
+              />
+              <DesignModal
+                show={showDesign}
+                onShow={this.onShowDesignChange}
                 onSelectedDesign={this.selectedDesign}
               />
               <button onClick={this.buttonTextOnChange} className="col-actions">
@@ -129,7 +177,7 @@ class Create extends Component {
             </div>
           </div>
           <div className="editor-col">
-            <img className="product" src={tshirt} alt="product" />
+            <img className="product" src={productImage} alt="product" />
             <div>{dragElement}</div>
           </div>
           <div className="editor-col">

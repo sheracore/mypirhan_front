@@ -27,18 +27,16 @@ import { toast } from "react-toastify";
 class ProductForm extends Form {
   state = {
     data: {
-      image: null,
       name: "",
       design_append_price_irr: "",
-      design_append_category: null,
+      type_name: "",
     },
+    image: null,
     errors: {},
     designsCategoty: [],
     designs: [],
     searchQuery: "",
     selectedDesignsCategory: [],
-    showPicture: false,
-    showUpload: false,
     selectedImage: null,
     selectedImageKey: null,
     selectValue: "",
@@ -47,6 +45,7 @@ class ProductForm extends Form {
 
   schema = {
     name: Joi.string().required().label("نام طرح"),
+    type_name: Joi.number().integer().required().label("دسته بندی"),
     design_append_price_irr: Joi.number()
       .integer()
       .required()
@@ -55,8 +54,7 @@ class ProductForm extends Form {
 
   async componentDidMount() {
     getAll("/billing/designappendcategory/")
-      .then((res) => {
-        const designsCategoty = [{ id: "", type_name: "All" }, ...res.data];
+      .then(({ data: designsCategoty }) => {
         this.setState({ designsCategoty });
       })
       .catch((err) => console.log(err));
@@ -64,10 +62,10 @@ class ProductForm extends Form {
 
   handleImageChange = (e) => {
     const image = e.target.files[0];
-    const { data } = this.state;
-    data["image"] = image;
-    this.setState({ data });
-    console.log(image, "%%%%");
+    // const { data } = this.state;
+    // data["image"] = image;
+    this.setState({ image });
+    // console.log(image, "%%%%");
     this.previewImage(image);
   };
 
@@ -91,17 +89,16 @@ class ProductForm extends Form {
     this.setState({ data });
   };
 
-  handleSubmit = () => {
+  doSubmit = () => {
     console.log("Befor api service...");
     let form_data = new FormData();
-    const { data } = this.state;
-    form_data.append("image", data.image);
-    form_data.append("design_append_category", data.design_append_category);
+    const { data, image } = this.state;
+    form_data.append("image", image);
+    form_data.append("design_append_category", data.type_name);
     form_data.append("design_append_price_irr", data.design_append_price_irr);
     form_data.append("name", data.name);
     console.log("Here", form_data);
-    // await saveDesign(data);
-    // *******************************************************
+
     const header = { "content-type": "multipart/form-data" };
     create("/billing/designappend/", form_data, {}, header)
       .then((res) => {
@@ -110,63 +107,24 @@ class ProductForm extends Form {
         }
       })
       .catch((err) => console.log(err));
-    // *******************************************************
 
-    // console.log(data);
-    // axios
-    //   .post(apiEndpoint, form_data, {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //     },
-    //     onUploadProgress: (progressEvent) => {
-    //       console.log(
-    //         "Upload Progress" +
-    //           Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-    //           "%"
-    //       );
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => console.log(err));
-
-    this.setState({ showPicture: false, showUpload: false });
+    // this.setState({ showPicture: false, showUpload: false });
     window.location.reload();
   };
 
   render() {
-    const { designsCategoty } = this.state;
+    const { designsCategoty, data } = this.state;
+    console.log("data :", data);
 
     return (
       <>
-        <p>دسته بندی</p>
-        <select
-          className="dashboart-select"
-          value={this.state.selectedCategory}
-          onChange={this.handleSelectChange}
-        >
-          {designsCategoty.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.type_name}
-            </option>
-          ))}
-        </select>
-        <form>
+        <form onSubmit={this.handleSubmit}>
+          {this.renderSelect("type_name", "دسته بندی", designsCategoty)}
           {this.renderInput("name", "نام طرح")}
           {this.renderInput("design_append_price_irr", "قیمت طرح (ریال)")}
+          {this.renderImgUploadButton("image")}
+          {this.renderButton("بارگذاری")}
         </form>
-        <input
-          style={{ disply: "none" }}
-          type="file"
-          id="image"
-          accept="image/png, image/jpeg, image/jpg"
-          onChange={this.handleImageChange}
-          required
-        />
-        <Button variant="btn btn-primary" onClick={this.handleSubmit}>
-          بارگذاری
-        </Button>
       </>
     );
   }
