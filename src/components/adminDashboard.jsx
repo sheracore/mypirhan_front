@@ -16,6 +16,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import DesignForm from "./designForm";
 import ProductForm from "./productForm";
+import ProductColorForm from "./productColorForm";
 
 class AdminDashboard extends Component {
   state = {
@@ -29,6 +30,7 @@ class AdminDashboard extends Component {
     designsCategoty: [],
     designs: [],
     products: [],
+    productColors: [],
     searchQuery: "",
     selectedDesignsCategory: [],
     showPicture: false,
@@ -40,6 +42,7 @@ class AdminDashboard extends Component {
     selectedImageRight: null,
     selectedImageKey: null,
     productFlag: null,
+    colorFlag: null,
     selectValue: "",
     preview: null,
   };
@@ -54,18 +57,22 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     getAll("/billing/designappend/")
-      .then((res) => {
-        const designs = res.data;
+      .then(({ data: designs }) => {
         this.setState({ designs });
       })
-      .catch((err) => console.log(err, "!!!!!!!!!"));
+      .catch((err) => console.log(err));
 
     getAll("/product/products/")
-      .then((res) => {
-        const products = res.data;
+      .then(({ data: products }) => {
         this.setState({ products });
       })
-      .catch((err) => console.log(err, "!!!!!!!!!"));
+      .catch((err) => console.log(err));
+
+    getAll("/product/productcolors/")
+      .then(({ data: productColors }) => {
+        this.setState({ productColors });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleClose = () => {
@@ -115,11 +122,18 @@ class AdminDashboard extends Component {
     this.setState({ showPicture: true, productFlag: false });
   };
 
-  addDesign = () => this.setState({ showUpload: true, productFlag: false });
+  addDesign = () =>
+    this.setState({ showUpload: true, productFlag: false, colorFlag: false });
+  addProduct = () =>
+    this.setState({ showUpload: true, productFlag: true, colorFlag: false });
+  addProductColor = () =>
+    this.setState({ showUpload: true, productFlag: false, colorFlag: true });
 
-  selectProduct = (key) => {
-    // const { data } = getProduct(key);
-    getById("/product/products/", key)
+  selectProduct = (key, color) => {
+    let url = "";
+    color ? (url = "/product/productcolors/") : (url = "/product/products/");
+    console.log(color, url);
+    getById(url, key)
       .then(({ data }) => {
         const selectedImageFront = data.image_front;
         const selectedImageBack = data.image_back;
@@ -137,8 +151,6 @@ class AdminDashboard extends Component {
       })
       .catch((err) => console.log(err));
   };
-
-  addProduct = () => this.setState({ showUpload: true, productFlag: true });
 
   handlePreviewImage = (imageUrl) => {
     this.setState({ preview: imageUrl });
@@ -159,6 +171,8 @@ class AdminDashboard extends Component {
       selectedCategory,
       products,
       productFlag,
+      productColors,
+      colorFlag,
     } = this.state;
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
     return (
@@ -226,15 +240,11 @@ class AdminDashboard extends Component {
               className="modal-desings"
               onClick={() => this.selectDesign(design.id)}
             >
-              {/* {this.convertToBase64(design.image)} */}
-              {/* {console.log(this.convertToBase64(design.image), "Hereee")} */}
               <img
                 className="modal-desings-img"
                 src={design.image}
                 alt="modal-designs-img"
               />
-              {/* <p>{design.name}</p> */}
-              {/* {console.log(typeof design.image, design.image)} */}
             </button>
           ))}
         </div>
@@ -250,7 +260,9 @@ class AdminDashboard extends Component {
             <Modal.Title></Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {productFlag ? (
+            {colorFlag ? (
+              <ProductColorForm previewImage={this.handlePreviewImage} />
+            ) : productFlag ? (
               <ProductForm previewImage={this.handlePreviewImage} />
             ) : (
               <DesignForm previewImage={this.handlePreviewImage} />
@@ -258,13 +270,14 @@ class AdminDashboard extends Component {
           </Modal.Body>
           <Modal.Footer>
             <p>
-              <img className="design-img" src={this.state.preview} />
+              <img
+                className="design-img"
+                src={this.state.preview}
+                alt="desing img"
+              />
             </p>
           </Modal.Footer>
         </Modal>
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <div className="admin-dashboard-header">محصولات</div>
@@ -273,17 +286,41 @@ class AdminDashboard extends Component {
             <button
               key={product.id}
               className="modal-desings"
-              onClick={() => this.selectProduct(product.id)}
+              onClick={() => this.selectProduct(product.id, false)}
             >
               <img
                 className="modal-desings-img"
                 src={product.image_front}
-                alt="modal-products-image"
+                alt="modal-products-img"
               />
             </button>
           ))}
         </div>
         <button className="dashboard-add-btn" onClick={() => this.addProduct()}>
+          اضافه کردن
+        </button>
+        <br />
+        <br />
+        <div className="admin-dashboard-header">رنگ بندی ها</div>
+        <div className="admin-dashboard-wapper">
+          {productColors.map((product) => (
+            <button
+              key={product.id}
+              className="modal-desings"
+              onClick={() => this.selectProduct(product.id, true)}
+            >
+              <img
+                className="modal-desings-img"
+                src={product.image_front}
+                alt="modal-products-img"
+              />
+            </button>
+          ))}
+        </div>
+        <button
+          className="dashboard-add-btn"
+          onClick={() => this.addProductColor()}
+        >
           اضافه کردن
         </button>
       </>

@@ -172,8 +172,14 @@
 }
 
 .product {
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
+}
+
+.product-sides {
+  position: absolute;
+  margin-left: 85%;
+  /* flex: 0 0 100%; */
 }
 
 /* ____________________________________ dragable ________________*/
@@ -351,6 +357,12 @@ as different headings are selected. */
 
 .ck-editor__editable {
   max-height: 100px;
+}
+
+.text-button {
+  margin-left: 40%;
+  margin-top: 20px;
+  background-color: khaki;
 }
 
 /* -------------------------------------- Modal --------------------------------- */

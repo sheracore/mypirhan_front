@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { create, getAll } from "../services/apiService";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 
@@ -18,7 +19,6 @@ import {
   getDesignCategories,
   deleteDesignCategory,
 } from "../services/designCategoryService";
-import { create, getAll } from "../services/apiService";
 import Designs from "../mock/mockDesigns";
 import { getCategoryDesigns } from "../mock/mockCategoryDesigns";
 import axios from "axios";
@@ -75,13 +75,15 @@ class ProductForm extends Form {
       .integer()
       .required()
       .label("تعداد سفارش در روز"),
-    size: Joi.any().valid("XXL", "XL", "L", "M", "S").label("سایز"),
+    size: Joi.any()
+      .valid("4XL", "3XL", "2XL", "XL", "L", "M", "S")
+      .label("سایز"),
     product_description: Joi.string().required().label("توضیحات محصول"),
     category_type: Joi.number().integer().required().label("دسته بندی محصول"),
     company_name: Joi.number().integer().required().label("شرکت تامیین کننده"),
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     getAll("/product/suppliers/")
       .then(({ data: suppliers }) => {
         this.setState({ suppliers });
@@ -117,13 +119,7 @@ class ProductForm extends Form {
     }
   };
 
-  handleSelectChange = (e, type) => {
-    const { data } = this.state;
-    data[type] = e.target.value;
-    this.setState({ data });
-  };
-
-  doSubmit = async () => {
+  doSubmit = () => {
     console.log("Hereeee");
     let form_data = new FormData();
     const {
@@ -191,11 +187,15 @@ class ProductForm extends Form {
       available_colors,
     } = this.state;
 
+    console.log(suppliers);
+
     return (
       <>
         <form onSubmit={this.handleSubmit}>
-          {this.renderSelect("category_type", "دسته بندی", categories)}
-          {this.renderSelect("company_name", "تامین کننده", suppliers)}
+          {categories.length > 0 &&
+            this.renderSelect("category_type", "دسته بندی", categories)}
+          {suppliers.length > 0 &&
+            this.renderSelect("company_name", "تامین کننده", suppliers)}
           {this.renderInput("product_brand", "نام برند")}
           {this.renderInput("product_name", "نام محصول")}
           {this.renderInput("color", "رنگ محصول")}
@@ -215,8 +215,6 @@ class ProductForm extends Form {
           {this.renderImgUploadButton("image_side_left")}
           {this.renderImgUploadButton("image_side_right")}
           {this.renderButton("بارگذاری")}
-
-          {/* {this.renderSelect("genreId", "Genre", this.state.genres)} */}
         </form>
       </>
     );

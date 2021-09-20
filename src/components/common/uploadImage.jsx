@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { apiEndpoint } from "../../services/designUploadService";
+import { Modal, Button } from "react-bootstrap";
+import { create } from "../../services/apiService";
 
 class Upload extends Component {
   state = {
@@ -17,32 +18,25 @@ class Upload extends Component {
     this.previewImage(image);
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleClose = () => {
+    this.props.onShow(false);
+  };
+
+  handleSubmit = () => {
     let form_data = new FormData();
     form_data.append("image", this.state.image, this.state.image.name);
-    console.log("Here form_data", form_data);
-    let url = apiEndpoint;
-    const config = {
-      onUploadProgress: (progressEvent) => {
-        console.log(
-          "Upload Progress" +
-            Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-            "%"
-        );
-      },
-    };
-    axios
-      .post(url, form_data, config)
-      .then((res) => {
-        console.log(res.data);
-        this.props.imageUrl(res.data.image);
+    const header = {};
+    create("/billing/designupload/", form_data, {}, header)
+      .then(({ data }) => {
+        console.log(data);
+        this.props.imageUrl(data.image);
+        this.handleClose();
       })
       .catch((err) => console.log(err));
+    console.log("Here form_data", form_data);
   };
 
   previewImage = (image) => {
-    // const image = this.state.image;
     if (image) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -50,32 +44,46 @@ class Upload extends Component {
       };
       reader.readAsDataURL(image);
     } else {
-      // this.setState({ preview: null });
     }
   };
 
   render() {
+    const { show } = this.props;
     const image = this.state;
+    console.log(show);
     return (
-      <div className="App">
-        {/* <form onSubmit={this.handleSubmit}> */}
-
-        <input
-          style={{ disply: "none" }}
-          type="file"
-          id="image"
-          accept="image/png, image/jpeg, image/jpg"
-          onChange={this.handleImageChange}
-          required
-        />
-
-        <p>
-          <img className="design-img" src={this.state.preview} />
-        </p>
-        {image.image ? <button onClick={this.handleSubmit}>Upload</button> : ""}
-        {/* <input type="submit" value="Upload"/> */}
-        {/* </form> */}
-      </div>
+      <>
+        <Modal show={show} onHide={this.handleClose} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title></Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="App">
+              <input
+                style={{ disply: "none" }}
+                type="file"
+                id="image"
+                accept="image/png, image/jpeg, image/jpg"
+                onChange={this.handleImageChange}
+                required
+              />
+              <p>
+                <img
+                  className="design-img"
+                  src={this.state.preview}
+                  alt="design-img"
+                />
+              </p>
+              {image.image ? (
+                <button onClick={this.handleSubmit}>Upload</button>
+              ) : (
+                ""
+              )}
+            </div>
+          </Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
+      </>
     );
   }
 }

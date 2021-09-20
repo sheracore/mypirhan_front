@@ -119,7 +119,8 @@ class ProductForm extends Form {
     return (
       <>
         <form onSubmit={this.handleSubmit}>
-          {this.renderSelect("type_name", "دسته بندی", designsCategoty)}
+          {designsCategoty.length > 0 &&
+            this.renderSelect("type_name", "دسته بندی", designsCategoty)}
           {this.renderInput("name", "نام طرح")}
           {this.renderInput("design_append_price_irr", "قیمت طرح (ریال)")}
           {this.renderImgUploadButton("image")}

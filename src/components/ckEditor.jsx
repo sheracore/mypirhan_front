@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
+import { Modal, Button } from "react-bootstrap";
 import Dragable from "./common/dragableBox";
 
 // import parse from "html-react-parser";
@@ -75,6 +75,10 @@ class Ckeditor extends Component {
     this.props.onTextDelete(key);
   };
 
+  handleClose = () => {
+    this.props.onShow(false);
+  };
+
   addText = (textData) => {
     // Create an empty array that will hold the final JSX output.
     const { key } = this.state;
@@ -89,39 +93,48 @@ class Ckeditor extends Component {
       />,
       key
     );
+    this.handleClose();
   };
 
   render() {
     const { textData } = this.state;
-    // console.log("Hello World");
+    const { show } = this.props;
     return (
       <>
-        <CKEditor
-          editor={Editor}
-          config={editorConfiguration}
-          // data="<p>Hello from CKEditor 5!</p>"
-          onReady={(editor) => {
-            // You can store the "editor" and use when it is needed.
-            console.log("Editor is ready to use!", editor);
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            this.setState({ textData: data });
-            // console.log({ event, editor, data });
-          }}
-          onBlur={(event, editor) => {
-            // console.log("Blur.", editor);
-          }}
-          onFocus={(event, editor) => {
-            // console.log("Focus.", editor);
-          }}
-        />
-        <button
-          onClick={() => this.addText(textData)}
-          className="btn btn-primary"
-        >
-          Add text
-        </button>
+        <Modal show={show} onHide={this.handleClose} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>متن دلخواه با فونت های فارسی و انگلیسی</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <CKEditor
+              editor={Editor}
+              config={editorConfiguration}
+              // data="<p>Hello from CKEditor 5!</p>"
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                console.log("Editor is ready to use!", editor);
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                this.setState({ textData: data });
+                // console.log({ event, editor, data });
+              }}
+              onBlur={(event, editor) => {
+                // console.log("Blur.", editor);
+              }}
+              onFocus={(event, editor) => {
+                // console.log("Focus.", editor);
+              }}
+            />
+            <button
+              onClick={() => this.addText(textData)}
+              className="text-button"
+            >
+              ADD
+            </button>
+          </Modal.Body>
+          <Modal.Footer></Modal.Footer>
+        </Modal>
       </>
     );
   }
