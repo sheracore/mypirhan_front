@@ -2,6 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import * as userService from "../services/userService";
+import { toast } from "react-toastify";
 import auth from "../services/authService";
 
 class RegisterForm extends Form {
@@ -25,9 +26,9 @@ class RegisterForm extends Form {
       if (ex.response && ex.response.status === 400) {
         console.log("In catsh block");
         const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        console.log(errors);
-        this.setState({ errors });
+        errors["username"] = ex.response.data;
+        this.setState({ errors: errors.username });
+        toast.error("این ایمیل قبلا ثبت نام کرده است");
       }
     }
   };

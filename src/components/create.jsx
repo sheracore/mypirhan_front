@@ -1,13 +1,11 @@
-import React, { Component, useState } from "react";
-
-import { Modal, Button } from "react-bootstrap";
+import React, { Component } from "react";
 import Ckeditor from "./ckEditor";
 import Upload from "./common/uploadImage";
 import Dragable from "./common/dragableBox";
 import tshirt from "../assets/tshirt2.png";
 import DesignModal from "./common/modal";
 import ProductModal from "./productModal";
-import { getById } from "../services/apiService";
+import { getAll, getById } from "../services/apiService";
 
 class Create extends Component {
   state = {
@@ -20,7 +18,15 @@ class Create extends Component {
     showUploadImage: false,
     productImageMain: tshirt,
     productImages: [],
+    allProductColors: [],
+    productColors: [],
   };
+
+  componentDidMount() {
+    getAll("/product/productcolors/")
+      .then(({ data: allProductColors }) => this.setState({ allProductColors }))
+      .catch((err) => console.log(err));
+  }
 
   addDesign = (selectedKey) => {
     // Create an empty array that will hold the final JSX output.
@@ -39,6 +45,8 @@ class Create extends Component {
   };
 
   addProduct = (selectedKey) => {
+    let { allProductColors, productColors } = this.state;
+
     getById("/product/products/", selectedKey)
       .then(({ data }) => {
         let { productImages } = this.state;
@@ -51,6 +59,9 @@ class Create extends Component {
         this.setState({ productImageMain, productImages });
       })
       .catch((err) => console.log(err));
+
+    productColors = allProductColors.filter((p) => p.product === selectedKey);
+    this.setState({ productColors });
   };
 
   handleTextDragElement = (dragableElement, key) => {
@@ -94,7 +105,7 @@ class Create extends Component {
     this.setState({ dragElement });
   };
 
-  onProductImageChang = (img) => {
+  onProductImageChange = (img) => {
     this.setState({ productImageMain: img });
   };
 
@@ -108,9 +119,16 @@ class Create extends Component {
       productImages,
       showUploadImage,
       showCKEditor,
+      allProductColors,
+      productColors,
     } = this.state;
 
-    console.log("products", productImages);
+    console.log(
+      "AllproductsColors",
+      allProductColors,
+      "productColors",
+      productColors
+    );
 
     return (
       <>
@@ -129,44 +147,28 @@ class Create extends Component {
               >
                 آپلود
               </button>
+              <button className="col-actions" onClick={this.handleShowDesign}>
+                طرح
+              </button>
+              <button onClick={this.buttonTextOnChange} className="col-actions">
+                متن
+              </button>
+              <ProductModal
+                show={showProduct}
+                onShow={this.onShowProductChange}
+                onSelectedProduct={this.selectedProduct}
+              />
               <Upload
                 show={showUploadImage}
                 onShow={this.handleShowUploadImageChange}
                 onChange={this.handleUploadDragElement}
                 imageUrl={this.handleUploadImage}
               />
-              <button className="col-actions" onClick={this.handleShowDesign}>
-                طرح
-              </button>
-
-              <ProductModal
-                show={showProduct}
-                onShow={this.onShowProductChange}
-                onSelectedProduct={this.selectedProduct}
-              />
               <DesignModal
                 show={showDesign}
                 onShow={this.onShowDesignChange}
                 onSelectedDesign={this.selectedDesign}
               />
-              <button onClick={this.buttonTextOnChange} className="col-actions">
-                متن
-              </button>
-            </div>
-          </div>
-          <div className="editor-col">
-            <img className="product" src={productImageMain} alt="product" />
-            <div>{dragElement}</div>
-            <div className="product-sides">
-              {productImages.map((img) => (
-                <button onClick={() => this.onProductImageChang(img)}>
-                  <img className="product" src={img} alt="product imgs" />
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="editor-col">
-            <div className="text-editor">
               <Ckeditor
                 show={showCKEditor}
                 onShow={this.onShowCkeditorChange}
@@ -174,6 +176,37 @@ class Create extends Component {
                 currentKey={this.state.key}
                 onTextDelete={this.deleteDragableBox}
               />
+            </div>
+          </div>
+          <div className="editor-col">
+            <img className="product" src={productImageMain} alt="product" />
+            <div>{dragElement}</div>
+            <div className="product-sides">
+              {productImages.map((img) => (
+                <button
+                  key={img}
+                  onClick={() => this.onProductImageChange(img)}
+                >
+                  <img className="product" src={img} alt="product imgs" />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="editor-col">
+            <div className="product-sides">
+              {productColors.length > 0 &&
+                productColors.map((p) => (
+                  <button
+                    key={p.id}
+                    onClick={() => this.onProductImageColorChange(p.id)}
+                  >
+                    <img
+                      className="productColor"
+                      src={p.image_front}
+                      alt="product img color"
+                    />
+                  </button>
+                ))}
             </div>
           </div>
         </div>

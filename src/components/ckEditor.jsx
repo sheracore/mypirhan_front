@@ -54,15 +54,7 @@ const editorConfiguration = {
     options: [13, 17, "default", 19, 21, 29, 32, 39, 42, 50, 55, 60],
   },
 
-  toolbar: [
-    "bold",
-    "italic",
-    "fontfamily",
-    "fontSize",
-    "insertTable",
-    "undo",
-    "redo",
-  ],
+  toolbar: ["bold", "italic", "fontfamily", "fontSize", "undo", "redo"],
 };
 
 class Ckeditor extends Component {
