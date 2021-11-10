@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Modal, Button } from "react-bootstrap";
 import ListGroup from "../common/listGroup";
 import { getAll } from "../../services/apiService";
-// import Designs from "../../mock/mockDesigns";
-// import { getCategoryDesigns } from "../../mock/mockCategoryDesigns";
 import SearchBox from "../searchBox";
 import _ from "lodash";
 

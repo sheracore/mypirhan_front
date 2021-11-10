@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import histroy from './history'
 import { ToastContainer } from 'react-toastify'
+import routes from './routes/routes'
 import Movies from './components/movies'
 import MovieForm from "./components/movieForm"
-import Customers from './components/customers'
+import Home from './components/home'
 import Rentals from './components/rental'
 import NotFound from './components/notFound'
 import LoginForm from './components/loginForm'
@@ -34,21 +36,35 @@ class App extends Component {
     <ToastContainer />
     <NavBar user={user}/>
     <main className="container">
+      <Router history={histroy}>
       <Switch>
+
+        {routes.map((route) => 
+          {console.log(route)}
+          // (<Route exact={true} path={route.path} component={route.component}/>)
+          )
+        }
+        <ProtectedRoute path="/movies/:id" component={MovieForm} />
+
+        <Route path="/movies" 
+          render={props => <Movies {...props} user={this.state.user}/>} />
+
         <Route path="/register" component={RegisterForm} />
         <Route path="/login" component={LoginForm} />
         <Route path="/logout" component={Logout} />
-        <ProtectedRoute path="/movies/:id" component={MovieForm} />
-        <Route path="/movies" 
-          render={props => <Movies {...props} user={this.state.user}/>} />
-        <Route path="/customers" component={Customers} />
+        <Route path="/home" component={Home} />
         <Route path="/rental" component={Rentals} />
         <Route path="/create" component={Create} />
         <Route path="/admin-dashboard" component={AdminDashboard} />
         <Route path="/not-found" component={NotFound} />
-        <Redirect from="/" exact to="/customers" />
+        
+        <Redirect from="/" exact to="/home" />
         <Redirect to="/not-found" />
+
+
+
       </Switch>
+      </Router>
     </main>
   </React.Fragment>
   );

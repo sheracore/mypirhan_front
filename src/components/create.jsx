@@ -16,7 +16,7 @@ class Create extends Component {
     showDesign: false,
     showProduct: false,
     showUploadImage: false,
-    productImageMain: tshirt,
+    productImageMain: "",
     productImages: [],
     allProductColors: [],
     productColors: [],
@@ -26,10 +26,33 @@ class Create extends Component {
     getAll("/product/productcolors/")
       .then(({ data: allProductColors }) => this.setState({ allProductColors }))
       .catch((err) => console.log(err));
+
+    getAll("/product/products/")
+      .then(({ data }) => {
+        let {
+          productImageMain,
+          productImages,
+          allProductColors,
+          productColors,
+        } = this.state;
+        const product = data[0];
+
+        productImages = [];
+        productImageMain = product.image_front;
+        productImages.push(product.image_front);
+        productImages.push(product.image_back);
+        productImages.push(product.image_side_right);
+        productImages.push(product.image_side_left);
+
+        productColors = allProductColors.filter(
+          (p) => p.product === product.id
+        );
+        this.setState({ productImageMain, productImages, productColors });
+      })
+      .catch((err) => console.log(err));
   }
 
   addDesign = (selectedKey) => {
-    // Create an empty array that will hold the final JSX output.
     const { key, dragElement } = this.state;
     this.setState({ key: key + 1 });
 
@@ -109,6 +132,18 @@ class Create extends Component {
     this.setState({ productImageMain: img });
   };
 
+  onProductImageColorChange = (img) => {
+    let { productImages, productImageMain } = this.state;
+    productImages = [];
+    productImages.push(img.image_front);
+    productImages.push(img.image_back);
+    productImages.push(img.image_side_right);
+    productImages.push(img.image_side_left);
+    productImageMain = img.image_front;
+
+    this.setState({ productImages, productImageMain });
+  };
+
   render() {
     const {
       textFlag,
@@ -184,24 +219,27 @@ class Create extends Component {
             <div className="product-sides">
               {productImages.map((img) => (
                 <button
+                  className="product-btn"
                   key={img}
                   onClick={() => this.onProductImageChange(img)}
                 >
-                  <img className="product" src={img} alt="product imgs" />
+                  <img className="product-img" src={img} alt="product imgs" />
                 </button>
               ))}
             </div>
           </div>
           <div className="editor-col">
-            <div className="product-sides">
+            <div className="product-color-wrapper">
+              <h6 className="text-center">رنگبندی</h6>
               {productColors.length > 0 &&
                 productColors.map((p) => (
                   <button
+                    className="product-colors-btn"
                     key={p.id}
-                    onClick={() => this.onProductImageColorChange(p.id)}
+                    onClick={() => this.onProductImageColorChange(p)}
                   >
                     <img
-                      className="productColor"
+                      className="product-colors-img"
                       src={p.image_front}
                       alt="product img color"
                     />
