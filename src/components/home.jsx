@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+
 import createImg from "../assets/create.jpeg";
 import shopImg from "../assets/shop.jpeg";
 import { getAll } from "../services/apiService";
@@ -40,6 +42,10 @@ class Home extends Component {
     this.setState({ searchQuery: query, selectedDesignsCategory: null });
   };
 
+  goIntoDesign = (id) => {
+    this.props.history.push("/create", { designId: id });
+  };
+
   getPagedData = () => {
     const {
       selectedDesignsCategory,
@@ -71,6 +77,8 @@ class Home extends Component {
     } = this.state;
 
     const { totalCount, data: designs } = this.getPagedData();
+    const { match, location, history } = this.props;
+    console.log("match", match, "Location", location, "History", history);
 
     return (
       <>
@@ -132,7 +140,11 @@ class Home extends Component {
           </button>
           <div className="home-design-wrapper" ref={itemScrl}>
             {designs.map((design) => (
-              <button className="home-design-button" key={design.id}>
+              <button
+                onClick={() => this.goIntoDesign(design.id)}
+                className="home-design-button"
+                key={design.id}
+              >
                 <img
                   className="home-desings-img"
                   alt="desing"

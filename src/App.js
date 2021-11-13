@@ -33,39 +33,22 @@ class App extends Component {
     const { user } = this.state
   return (
   <React.Fragment>
+    <Router history={histroy}>
     <ToastContainer />
     <NavBar user={user}/>
-    <main className="container">
-      <Router history={histroy}>
+    
       <Switch>
-
         {routes.map((route) => 
-          {console.log(route)}
-          // (<Route exact={true} path={route.path} component={route.component}/>)
+          (<Route exact={true} path={route.path} component={route.component}/>)
           )
         }
         <ProtectedRoute path="/movies/:id" component={MovieForm} />
-
         <Route path="/movies" 
           render={props => <Movies {...props} user={this.state.user}/>} />
-
-        <Route path="/register" component={RegisterForm} />
-        <Route path="/login" component={LoginForm} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/home" component={Home} />
-        <Route path="/rental" component={Rentals} />
-        <Route path="/create" component={Create} />
-        <Route path="/admin-dashboard" component={AdminDashboard} />
-        <Route path="/not-found" component={NotFound} />
-        
         <Redirect from="/" exact to="/home" />
         <Redirect to="/not-found" />
-
-
-
       </Switch>
-      </Router>
-    </main>
+    </Router>
   </React.Fragment>
   );
 }

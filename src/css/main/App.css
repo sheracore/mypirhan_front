@@ -235,6 +235,7 @@
 }
 
 .product-btn {
+  background-color: transparent;
   width: 55px;
   height: 55px;
   margin: 5px;

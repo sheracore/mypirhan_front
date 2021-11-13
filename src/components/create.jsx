@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import Ckeditor from "./ckEditor";
 import Upload from "./common/uploadImage";
 import Dragable from "./common/dragableBox";
@@ -23,6 +24,7 @@ class Create extends Component {
   };
 
   componentDidMount() {
+    const designImgFromHome = this.props.location.state;
     getAll("/product/productcolors/")
       .then(({ data: allProductColors }) => this.setState({ allProductColors }))
       .catch((err) => console.log(err));
@@ -50,6 +52,11 @@ class Create extends Component {
         this.setState({ productImageMain, productImages, productColors });
       })
       .catch((err) => console.log(err));
+
+    if (designImgFromHome) {
+      console.log("Here comes :", designImgFromHome.designId);
+      this.addDesign(designImgFromHome.designId);
+    }
   }
 
   addDesign = (selectedKey) => {
@@ -158,12 +165,7 @@ class Create extends Component {
       productColors,
     } = this.state;
 
-    console.log(
-      "AllproductsColors",
-      allProductColors,
-      "productColors",
-      productColors
-    );
+    console.log("props", this.props, this.props.location.state);
 
     return (
       <>
@@ -253,4 +255,4 @@ class Create extends Component {
   }
 }
 
-export default Create;
+export default withRouter(Create);
