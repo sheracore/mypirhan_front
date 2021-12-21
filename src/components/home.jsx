@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
 import createImg from "../assets/create.jpeg";
 import shopImg from "../assets/shop.jpeg";
@@ -79,6 +80,14 @@ class Home extends Component {
     const { totalCount, data: designs } = this.getPagedData();
     const { match, location, history } = this.props;
     console.log("match", match, "Location", location, "History", history);
+
+    const book = { title: "Harry Potter" };
+    book.isPulished = true;
+    book.s = true;
+    console.log(book);
+    // function pub(book){
+    //   book.isPu
+    // }
 
     return (
       <>

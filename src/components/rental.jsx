@@ -1,45 +1,51 @@
-import React, { Component } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { decrement, increment } from "../redux/slices/counterSlice";
 
-class Rentrals extends Component {
-  state = {
-    show: false,
+const mapStateToProps = (state) => {
+  return {
+    value: state.counterReducer.value,
   };
+};
 
-  handleShow = () => {
-    this.setState({ show: true });
+const mapDispatchToProps = (dispatch) => {
+  return {
+    incrementCount: (e) => {
+      return dispatch(increment(e));
+    },
+    decrementCount: (e) => {
+      return dispatch(decrement(e));
+    },
   };
+};
 
-  handleClose = () => {
-    this.setState({ show: false });
-  };
+class Rental extends React.Component {
+  // const [count_by_hook, setCount] = useState(0);
+
+  // useEffect(() => {
+  //Update the document title and componenDidmount
+  // document.titile = `You clicked ${count_by_hook} times`;
+  // });
 
   render() {
-    const { show } = this.state;
-    console.log(show);
     return (
-      <>
-        <Button variant="primary" onClick={this.handleShow}>
-          Launch static backdrop modal
-        </Button>
-
-        <Modal show={show} onHide={this.handleClose} animation={false}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </>
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={this.props.incrementCount}
+        >
+          Increment by redux
+        </button>
+        <span>{this.props.value}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={this.props.decrementCount}
+        >
+          Decrement by redux
+        </button>
+      </div>
     );
   }
 }
 
-export default Rentrals;
+export default connect(mapStateToProps, mapDispatchToProps)(Rental);

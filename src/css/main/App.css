@@ -245,16 +245,6 @@
   max-height: 100%;
 }
 
-.product-colors-btn {
-  width: 55px;
-  height: 55px;
-  margin: 5px;
-}
-.product-colors-img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
 .product-color-wrapper {
   border: 1px solid black;
   margin-left: auto;
@@ -264,6 +254,19 @@
   max-height: 170px;
   height: 170px;
 }
+
+.product-colors-btn {
+  width: 55px;
+  height: 55px;
+  margin: 5px;
+  background: transparent;
+  border: 1px;
+}
+.product-colors-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .text-center {
   margin-top: 2px;
   text-align: center;
@@ -518,11 +521,6 @@ as different headings are selected. */
   width: 70px;
   height: 70px;
   transition: width 0.4s, height 0.4s;
-}
-
-.modal-desings-img:hover {
-  width: 72px;
-  height: 72px;
 }
 
 .modal-body {

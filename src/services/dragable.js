@@ -1,9 +1,11 @@
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function drag(element) {
     const elmnts = document.getElementsByClassName(element)
     var count = 0
     for (var elmnt of elmnts){
-      console.log(elmnt)
+      // console.log(elmnt)
       dragElement(count,elmnt);
       count += 1
     }
